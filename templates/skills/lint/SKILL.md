@@ -1,6 +1,6 @@
 ---
 name: lint
-version: 1.2.0
+version: 1.3.0
 description: Health-check the wiki — broken links, orphan pages, missing state, contradictions, gaps. Reports only, does not auto-fix. Use when the user says "lint", "/lint", "health-check the wiki", "find broken links", or asks for a vault audit.
 ---
 
@@ -21,7 +21,7 @@ Walk `{{VAULT_DIR}}/` and report issues. Do not fix anything automatically — s
    - Asymmetric event edges: `A.emits_events_to: [[B]]` declared without a matching `B.subscribes_to: [[A]]` (or vice versa). Flag — don't auto-fix; the agent may have only updated one side.
    - Relationship wikilinks pointing to a service folder that doesn't exist (e.g. `calls: [[Project.Z]]` but no `wiki/services/Project.Z/Project.Z.md`).
 9. **Suggested research gaps** — concepts mentioned in 3+ pages but lacking their own concept page. Output as a list, no action required.
-10. **Kit drift** — only applies if this vault is the dogfooding instance of the kit itself (i.e. `{{VAULT_DIR}}/dist/llm-wiki-kit/` exists). Skip silently otherwise. Compare live system vs kit templates:
+10. **Kit drift** — only applies if this vault is the dogfooding instance of the kit itself (i.e. a checkout of the `llm-wiki-kit` repo exists under `{{ROOT_DIR}}`). Skip silently otherwise. Compare live system vs kit templates, and also flag if the kit checkout has unpushed commits — synced-but-unpublished is still drift for everyone else:
     - **Skill versions:** for each skill in `templates/skills/<name>/SKILL.md`, compare `version:` against the installed copy. Flag mismatches in either direction.
     - **Missing skills:** wiki skills installed live (skills that read or write the vault) but absent from `templates/skills/`. Ignore generic non-wiki skills.
     - **Schema rule drift:** standing rules/conventions present in the live schema files (root `CLAUDE.md`/`AGENTS.md`, vault `CLAUDE.md`) but absent from `templates/schema/`, or vice versa. Compare at the bullet/rule level — placeholders are expected differences. Skip rules whose introducing commit message marked them instance-only.
