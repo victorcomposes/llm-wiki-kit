@@ -1,0 +1,28 @@
+{
+  "//": "MERGE these two entries into ~/.claude/settings.json — never overwrite the user's file. User scope is mandatory: settings.json does not cascade, and these must fire in every session under {{ROOT_DIR}}. Substitute {{VAULT_DIR}} with a forward-slash path. Requires jq on PATH.",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"{{VAULT_DIR}}/.claude/hooks/capture-nudge.sh\"",
+            "statusMessage": "Checking service-knowledge capture..."
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"{{VAULT_DIR}}/.claude/hooks/stop-nudge.sh\"",
+            "statusMessage": "Vault bookkeeping check..."
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "bash \"{{VAULT_DIR}}/.claude/hooks/lint-reminder.sh\"",
+            "timeout": 10,
+            "statusMessage": "Checking when /lint last ran"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "if": "Bash(git *)",
+            "command": "bash \"{{VAULT_DIR}}/.claude/hooks/secret-scan.sh\"",
+            "timeout": 15,
+            "statusMessage": "Scanning staged changes for secrets"
+          }
+        ]
+      }
+    ]
+  }
+}
