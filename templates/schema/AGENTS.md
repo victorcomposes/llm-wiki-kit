@@ -35,7 +35,8 @@ Companion skills (third-party, if installed — use at these points, skip silent
 - **Prototype seeds (standing rule — builder-session module, if installed):** while reading any codebase, note prototype-worthy friction (toil, missing tooling, "easy to spike with AI" moments) as one-line seed entries in `wiki/concepts/prototype-ideas.md`.
 - Ticket ids match `{{TICKET_PREFIX}}-\d+`. Placeholder tickets use `VLT-NNNN`, never a made-up `{{TICKET_PREFIX}}-` id (it will collide with a real one); rename when the tracker assigns the real id. Each ticket folder also gets a thin folder-note `{{TICKET_PREFIX}}-NNNN.md` so wikilinks to it resolve.
 - Commit messages: subject `{{TICKET_PREFIX}}-NNNN <summary>` (or `vault: <summary>` for non-ticket maintenance), no body, no trailers — never `Co-Authored-By`.
-- Think before acting; smallest correct change; match surrounding style. The vault is a git repo — commit after meaningful changes; never force-add a gitignored AI artifact.
+- Approved plans are persisted to `tickets/{{TICKET_PREFIX}}-NNNN/plan.md` with numbered `## Key Changes` steps and edited surgically: a change request touches only the named step and leaves every other line verbatim — never regenerate the whole plan (regeneration drifts unrelated parts; an `Edit` cannot). Get it right before approval by reading the brief, affected folder-note(s), and `wiki/standards/` first.
+- Think before acting; verify before you theorize (gather and quote evidence — logs, git history, source, captures — and rank hypotheses by confidence before changing anything, rather than guessing a cause you could have read); smallest correct change; match surrounding style. The vault is a git repo — commit after meaningful changes; never force-add a gitignored AI artifact.
 
 ## References
 

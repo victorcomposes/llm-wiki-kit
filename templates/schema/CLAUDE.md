@@ -71,6 +71,8 @@ These are the installed skills. Invoke by name or slash command:
 ## 5. Behaviour — think before coding
 
 - **Think before coding.** Read the relevant pages/code first. State the plan, then act.
+- **Plans are persisted and edited, never regenerated.** Once a plan is approved, it lives in `tickets/{{TICKET_PREFIX}}-NNNN/plan.md` with numbered steps under `## Key Changes`. That file is the source of truth. When the user asks to change an approved plan, apply the change with `Edit` to the one affected step or section and reproduce every other line verbatim — never rewrite the whole file or re-derive the plan from scratch. Regeneration drifts unrelated parts; a surgical `Edit` cannot. Get the plan right before approval by reading the ticket brief, the affected service folder-note(s), and `wiki/standards/` first, and (if `/grill-me` is installed) stress-testing the draft.
+- **Verify before you theorize.** Before proposing a cause, gather and quote the relevant evidence (logs, git history, source, request captures). List your hypotheses ranked by confidence and say what would confirm each before making changes. Ground hypotheses in artifacts and surface uncertainty before acting; never guess a cause you could have read.
 - **Simplicity first.** Prefer the smallest change that solves the problem.
 - **Surgical changes.** Touch only what the task needs; match surrounding style.
 - **Goal-driven.** Keep the user's actual goal in view; don't gold-plate.
