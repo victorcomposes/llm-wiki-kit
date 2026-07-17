@@ -1,0 +1,35 @@
+{
+  "_doc": "Ground truth for the lint fixture vault. Every planted defect, one entry per expected finding. The scorer diffs a lint run's findings against this.",
+  "_dedup_rule": "One underlying fault maps to one finding. A dangling index entry that happens to be written as a wikilink is reported ONCE, as index-drift-dangling, NOT also as broken-wikilink. Reporting the same fix under two headings is noise, not signal.",
+  "_orphan_source_rule": "Orphan = a page unreachable by navigating the wiki. Inbound links from the append-only ledgers (log.md, journal/*, brag.md) do NOT rescue a page from orphan status: nobody navigates via the log. A page linked only from log.md is still an orphan.",
+  "_negative_traps": "Case-insensitive links ([[Alpha]] -> alpha.md) and alias/anchor links ([[alpha#Overview|text]] -> alpha.md) resolve to an existing page and must NOT be reported as broken. They are absent from `expected` on purpose; reporting them counts as a false positive.",
+  "scored_types": [
+    "broken-wikilink",
+    "orphan",
+    "index-drift-missing",
+    "index-drift-dangling",
+    "missing-state",
+    "missing-service-page",
+    "graph-asymmetry"
+  ],
+  "excluded_types": {
+    "stale-ticket": "mtime-based; not reproducible from a git checkout (fresh clone = fresh mtime)",
+    "contradiction-unreviewed": "mtime-based; same reason",
+    "suggested-concept": "advisory heuristic, not a defect",
+    "suggested-research-gap": "advisory heuristic, not a defect",
+    "kit-drift": "environment-specific; depends on the real kit checkout, not the fixture"
+  },
+  "expected": [
+    { "type": "broken-wikilink", "source": "wiki/concepts/alpha.md", "target": "nonexistent-alpha" },
+    { "type": "broken-wikilink", "source": "wiki/services/Svc.A/Svc.A.md", "target": "ghost-page" },
+    { "type": "orphan", "page": "wiki/concepts/orphan-concept.md" },
+    { "type": "orphan", "page": "wiki/concepts/only-logged.md" },
+    { "type": "index-drift-missing", "page": "wiki/concepts/beta.md" },
+    { "type": "index-drift-missing", "page": "wiki/concepts/orphan-concept.md" },
+    { "type": "index-drift-missing", "page": "wiki/concepts/only-logged.md" },
+    { "type": "index-drift-dangling", "entry": "deleted-page" },
+    { "type": "missing-state", "folder": "tickets/SD-9002" },
+    { "type": "missing-service-page", "service": "Svc.Z" },
+    { "type": "graph-asymmetry", "from": "Svc.A", "to": "Svc.B" }
+  ]
+}
