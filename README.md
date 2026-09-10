@@ -80,7 +80,7 @@ The kit deliberately does **not** vendor third-party skills — the installer of
 
 ## Hooks (optional, recommended — Claude Code only)
 
-Without hooks everything still works, but knowledge capture is honor-system. With them, the standing rules are **enforced**. The installer offers four (`templates/hooks/`):
+Without hooks everything still works, but knowledge capture is honor-system. With them, the standing rules are **enforced**. The installer offers five (`templates/hooks/`):
 
 | Hook | Event / scope | What it does |
 |---|---|---|
@@ -88,8 +88,9 @@ Without hooks everything still works, but knowledge capture is honor-system. Wit
 | `stop-nudge` | Stop, user `settings.json` | Blocks session end once if a service was touched and capture hasn't run; otherwise nudges on uncommitted vault changes. |
 | `secret-scan` | PreToolUse on `git`, vault `settings.json` | Blocks `git commit` while staged vault changes contain secret-shaped strings. |
 | `lint-reminder` | SessionStart, vault `settings.json` | One-line tip when the last `/lint` is 7+ days old. |
+| `guard-git` | PreToolUse on Bash, user `settings.json` | Denies `git add -A` / `-f`, and any commit whose subject is not `{{TICKET_PREFIX}}-NNNN <summary>` (or `<op>: <summary>` in the vault) or that carries a body. Makes the section 6 git rules deterministic instead of advisory. |
 
-Layout rule: **logic in the vault (versioned), pointers at user level (reach)** — `settings.json` doesn't cascade, so the two session-wide hooks must be referenced from `~/.claude/settings.json` (the installer merges, never overwrites). Windows uses the PowerShell nudge variants; macOS/Linux use the bash variants, which require `jq`. `secret-scan`/`lint-reminder` are bash everywhere (Git Bash on Windows). Hooks added mid-session activate only after `/hooks` is opened or a new session starts.
+Layout rule: **logic in the vault (versioned), pointers at user level (reach)** — `settings.json` doesn't cascade, so the three session-wide hooks must be referenced from `~/.claude/settings.json` (the installer merges, never overwrites). Windows uses the PowerShell nudge variants; macOS/Linux use the bash variants, which require `jq`. `secret-scan`/`lint-reminder` are bash everywhere (Git Bash on Windows). Hooks added mid-session activate only after `/hooks` is opened or a new session starts.
 
 ## Background
 

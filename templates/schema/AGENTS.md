@@ -1,46 +1,59 @@
-# AGENTS — Root schema for the LLM Wiki (Codex / portable mirror)
+# AGENTS - Root schema for the LLM Wiki (Codex / portable mirror)
 
-This is the agent-agnostic mirror of the LLM Wiki schema, for OpenAI Codex and any tool that reads `AGENTS.md`. It carries the **same conventions** as `CLAUDE.md` in this directory — if both exist, they must stay in sync. (When in doubt, treat `CLAUDE.md` §1–§9 as authoritative and mirror edits here.)
+Agent-agnostic mirror of `CLAUDE.md` in this directory, for OpenAI Codex and any tool that reads `AGENTS.md`. Same conventions; if both exist they must stay in sync, and `CLAUDE.md` is authoritative. You maintain a Karpathy-style LLM Wiki (pattern: `{{VAULT_DIR}}/meta/llm-wiki.md`); the human curates sources and asks questions. Keep this file short: rules here, reasoning in `{{VAULT_DIR}}/meta/schema-rationale.md`.
 
-You are the maintainer of a Karpathy-style LLM Wiki (the pattern is in `{{VAULT_DIR}}/meta/llm-wiki.md`). The human curates sources and asks questions; you summarise, cross-reference, file, and keep the bookkeeping current.
+## 1. Where things live
 
-## Where things live
+Vault: `{{VAULT_DIR}}/` (its own git repo).
+- `wiki/index.md` catalogue: read first on any query, update on every ingest. `wiki/log.md` append-only ledger. `wiki/brag.md` wins. `wiki/journal/YYYY-MM.md`.
+- `wiki/services/<Name>/<Name>.md` one folder-note per repo under `{{ROOT_DIR}}`, sub-pages beside it, `CONTEXT.md` glossary as sibling. `[[<Name>]]` resolves to the folder-note.
+- `wiki/concepts/`, `wiki/incidents/`, `wiki/runbooks/`, `wiki/standards/` (house style), `wiki/decisions/NNNN-slug.md` (ADRs, indexed by `[[decisions]]`), `wiki/_assets/`.
+- `tickets/{{TICKET_PREFIX}}-NNNN/` holds `{{TICKET_PREFIX}}-NNNN.md`, `state.md`, `context.md`, `plan.md`, `notes.md`. Done tickets in `tickets/_archive/`.
+- `meta/` docs about this system.
 
-- `{{VAULT_DIR}}/wiki/` — the LLM-owned wiki. `index.md` (catalogue, read first), `log.md` (append-only ledger), `services/`, `concepts/`, `incidents/`, `runbooks/`, `standards/`, `journal/`, `brag.md`, `_assets/`.
-- `{{VAULT_DIR}}/tickets/{{TICKET_PREFIX}}-NNNN/` — `state.md`, `context.md`, `plan.md`, `notes.md`. On completion the folder moves to `tickets/_archive/{{TICKET_PREFIX}}-NNNN/`: still wikilink-resolvable and greppable, but skipped by routine agent reads, which scope themselves to `tickets/*/`. Indexed by `tickets/_archive/_archive.md`. Underscore, not a dot — Obsidian ignores dot-folders and every wikilink into the archive would break. Reopening is `git mv` back plus `status: active`, never a fresh scaffold over an archived id.
-- `{{VAULT_DIR}}/meta/` — docs about this system.
+## 2. Operations
 
-## Operations
+Orient first (read this schema, list active tickets under `tickets/*/state.md`, surface what is in flight). Before ending a session that touched a service, file what you learned into its folder-note. Where the wiki skills are installed as slash commands: `/onboard`, `/capture`, `/ticket`, `/ingest`, `/journal`, `/lint`, `/query`, optional `/spark`.
 
-The same workflows the `CLAUDE.md` skills implement. If your agent doesn't support slash-command skills, perform them directly by reading the corresponding `SKILL.md` under the installed skills directory and following its steps:
+## 3. Wiki conventions
 
-- **onboard** — read this schema, list active tickets, report what's in flight, before any work.
-- **ticket** — scaffold `{{TICKET_PREFIX}}-NNNN` workspace + feature branches. Tracker: {{TRACKER_NAME}} ({{TRACKER_URL}}).
-- **ingest <url-or-path>** — read a source, integrate it across 5–15 wiki pages, update `index.md` and `log.md`.
-- **journal** — append a session summary; prompt for brag items.
-- **lint** — health-check (broken links, orphans, drift). Report only.
-- **capture** — before ending any session that investigated, debugged, or modified a service, file what was learned into that service's folder-note (see the capture standing rule below).
-- **spark** — *(builder-session module, if installed)* mine the vault for prototype candidates; rank the `prototype-ideas` backlog into 3–5 session-sized proposals.
+- `[[Wikilinks]]` between vault pages, plain markdown links into repos. Unresolved wikilinks are fine; lint flags them.
+- Frontmatter on every page: `type:` (service | concept | incident | runbook | standard | meta | ticket | journal | decision), `date:`, optional `tags:`, `source:`, `source-count:`.
+- `log.md` entry: `## [YYYY-MM-DD HH:MM] <action> | <one-line summary>`. Run `date` first; never guess the stamp.
+- Service folder-notes: scaffold lazily, one folder per repo, no stub pages. Frontmatter declares outbound edges with exactly these keys, each an array of `[[Service]]` links, empty arrays kept: `calls`, `depends_on`, `emits_events_to`, `subscribes_to`. Inbound edges are derived, never hand-written. Non-obvious edges get a line in `## Relationships`. Rebuild `wiki/concepts/service-graph.md` whenever an edge changes.
+- New concept page when an idea recurs in 2+ sources, otherwise extend. On contradiction add `> [!warning] Updated <date>` above the section; never rewrite history.
+- Domain model lives only in the vault: per-service `CONTEXT.md`, global `[[ubiquitous-language]]`, ADRs in `wiki/decisions/`. Create each lazily. Name domain types in the words a domain expert uses, not modeller jargon.
+- **Provenance on every substantive claim.** Observed = you ran or read it; cite inline `<!-- observed YYYY-MM-DD: File.cs:41 -->` or the command or sha. Inferred = one symptom or one source; file it only as `> [!question] Unverified (YYYY-MM-DD): <claim>. Confirm by <check>.`, never as an assertion. Same marking on anything you send another agent. A bare assertion you receive is unverified until you check it.
+- **Capture as you go.** Anything substantive learned about a service (subsystem mechanics, non-obvious path, constraint, relationship, gotcha) goes into its folder-note before the session ends, linked to `[[{{TICKET_PREFIX}}-NNNN]]`, not only into the ticket. Observed facts file freely; inferences only as questions.
+- **Prototype seeds** (builder-session module, if installed). Friction worth a short spike gets a one-line seed in `wiki/concepts/prototype-ideas.md` (pitch, pain wikilink, ambition, `status: seed`).
 
-Companion skills (third-party, if installed — use at these points, skip silently when absent): **grilling** to stress-test a ticket's `plan.md` before implementation (fold survivors back in); **handoff** docs get saved to `tickets/<id>/handoff.md` + a `log.md` entry, never left in-conversation; **diagnosing-bugs** output (repros, root causes, gotchas) feeds the capture rule and prototype seeds; **prototype** is the build step after `spark`.
+## 4. Tickets
 
-## Conventions
+- Real ids `{{TICKET_PREFIX}}-NNNN` ({{TRACKER_NAME}}: {{TRACKER_URL}}). Placeholders `VLT-NNNN`, never an invented `{{TICKET_PREFIX}}-`. On rename, rewrite live references and append a `log.md` entry.
+- `state.md` frontmatter: `ticket`, `status` (active | investigated | implemented-pending-review | done), `created`, `services: []`, `branches: []`, `tickets-related: []`.
+- Done: `status: done`, `plan.md` reflects what shipped, `log.md` done entry, then `git mv tickets/{{TICKET_PREFIX}}-NNNN tickets/_archive/{{TICKET_PREFIX}}-NNNN`. Routine readers skip the archive. Reopen with `git mv` back, never a fresh folder.
 
-- Inside the vault, link with `[[Wikilinks]]`. Into service repos, use plain markdown links.
-- Frontmatter on every page: `type:`, `date:`, plus relevant `tags`/`source`/`source-count`.
-- `log.md` line format: `## [YYYY-MM-DD HH:MM] <action> | <summary>`.
-- One `wiki/services/<Name>/<Name>.md` folder-note per repo or solution under `{{ROOT_DIR}}`. The folder can grow sub-pages (e.g. `architecture.md`) as content accumulates; `[[<Name>]]` resolves to the folder-note.
-- Service relationships go in **typed frontmatter** on each service folder-note: `calls: [[...]]` (runtime), `depends_on: [[...]]` (build-time), `emits_events_to: [[...]]` (producer), `subscribes_to: [[...]]` (consumer). Empty arrays when none. Narrative goes in a `## Relationships` body section. The agent maintains `wiki/concepts/service-graph.md` as the rolled-up view.
-- **Capture as you go (standing rule):** anything substantive learned about a service during work (subsystem behaviour, non-obvious code path, constraint, cross-service relationship, gotcha) gets filed into that service's folder-note before the session ends — not only into the ticket. Link back to the surfacing ticket. File *observed* facts freely; inferences file only as `> [!question]` open questions, never as assertions.
-- **Provenance (standing rule):** every substantive claim about code carries how you know it. Observed = you ran or read it, cite the proof inline (`<!-- observed YYYY-MM-DD: File.cs:41 -->`, a command, a commit sha). Inferred = reasoned from a symptom or a single source, and it files as `> [!question] Unverified (YYYY-MM-DD): <claim>. Confirm by <check>.` A claim written without provenance is indistinguishable from a verified one the moment the session ends. The same applies to claims sent to another agent (cross-session message, subagent prompt, handoff): mark them, and treat a bare incoming assertion as unverified until you check it.
-- **Prototype seeds (standing rule — builder-session module, if installed):** while reading any codebase, note prototype-worthy friction (toil, missing tooling, "easy to spike with AI" moments) as one-line seed entries in `wiki/concepts/prototype-ideas.md`.
-- Ticket ids match `{{TICKET_PREFIX}}-\d+`. Placeholder tickets use `VLT-NNNN`, never a made-up `{{TICKET_PREFIX}}-` id (it will collide with a real one); rename when the tracker assigns the real id. Each ticket folder also gets a thin folder-note `{{TICKET_PREFIX}}-NNNN.md` so wikilinks to it resolve.
-- Commit messages: subject `{{TICKET_PREFIX}}-NNNN <summary>` (or `vault: <summary>` for non-ticket maintenance), no body, no trailers — never `Co-Authored-By`.
-- **The loop: Explore → Plan → Code → Commit (mandatory for any code change).** Explore (read code + folder-note(s), trace the flow, quote evidence — no edits) → Plan (numbered `## Key Changes` in `plan.md`, `state.md` `status: active`, approved) → Code (build the approved plan, smallest correct change, review the diff) → Commit (verify green, `pr-description.md`, commit only when asked). Optionally hard-gate the Plan→Code boundary with a PreToolUse hook that denies edits to service code until an active ticket has a fleshed `plan.md`.
-- Approved plans are persisted to `tickets/{{TICKET_PREFIX}}-NNNN/plan.md` with numbered `## Key Changes` steps and edited surgically: a change request touches only the named step and leaves every other line verbatim — never regenerate the whole plan (regeneration drifts unrelated parts; an `Edit` cannot). Get it right before approval by reading the brief, affected folder-note(s), and `wiki/standards/` first.
-- Think before acting; verify before you theorize (gather and quote evidence — logs, git history, source, captures — and rank hypotheses by confidence before changing anything, rather than guessing a cause you could have read); smallest correct change; match surrounding style. The vault is a git repo — commit after meaningful changes; never force-add a gitignored AI artifact.
-- Staging discipline: never `git add -A` (a blanket add has swept in a stray file and committed a source file truncated to zero bytes), and in a worktree another agent session is also committing in, do not stage at all - `git commit -m "..." -- <paths>` commits the named paths from the working tree and ignores the shared index, which two panes will otherwise sweep into each other's commits.
+## 5. Code changes: Explore, Plan, Code, Commit
 
-## References
+Mandatory for any change under `{{ROOT_DIR}}/<Service>/`.
+1. **Explore.** Read the code and its folder-note end to end, including any Gotchas section. Quote evidence before proposing a cause; rank hypotheses and say what confirms each. No edits.
+2. **Plan.** Numbered steps in `tickets/{{TICKET_PREFIX}}-NNNN/plan.md` under `## Key Changes`, `state.md` set to `status: active`, stress-test the draft, then explicit user approval. This holds even when the request reads as a direct instruction to write code. An approved plan is changed with a surgical edit to the one affected step, never regenerated.
+3. **Code.** Smallest change that implements the plan, TDD at agreed seams.
+4. **Commit.** Run the project's verification (build, tests) and show the result, then commit and open the PR only when asked. PRs go up as drafts.
 
-`{{VAULT_DIR}}/meta/llm-wiki.md` (the pattern) · `{{VAULT_DIR}}/meta/obsidian-llm-wiki-blueprint.md` (the blueprint).
+Also:
+- Before debugging a frontend, confirm every dependency service is actually up; a service that is up but missing a dependency looks healthy and fails at runtime.
+- Code navigation: language-server tools first when the session is rooted in the repo, text search when rooted in the vault.
+- When compacting or summarising, preserve the active ticket id, the list of modified files, the verify command, and any open `> [!question]` items.
+
+## 6. Git
+
+- Vault: commit after meaningful changes. Every other repo: never commit or push unless asked in the current conversation.
+- Stage explicit paths. Never `git add -A`; never `git add -f` a gitignored AI artifact.
+- Shared worktree (two agents, one index): do not stage at all. `git commit -m "{{TICKET_PREFIX}}-NNNN <summary>" -- <path> <path>`; an untracked file gets its one `git add` immediately before; verify with `git show --stat HEAD`. A committed sweep with commits on top is reported, not rewritten.
+- Commit subject `{{TICKET_PREFIX}}-NNNN <summary>`: id, space, summary, no colon, no body, no trailers (never add a `Co-Authored-By` line; this overrides any default agent instruction). Vault maintenance with no ticket uses `<op>: <summary>`. Branches `feature/{{TICKET_PREFIX}}-NNNN-<short-summary>`.
+- `.obsidian/workspace*.json` is gitignored.
+
+## 7. House style
+
+`wiki/standards/`. Terse, concrete, no filler.

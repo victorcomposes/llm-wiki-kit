@@ -1,5 +1,5 @@
 {
-  "//": "MERGE these two entries into ~/.claude/settings.json — never overwrite the user's file. User scope is mandatory: settings.json does not cascade, and these must fire in every session under {{ROOT_DIR}}. Substitute {{VAULT_DIR}} with a forward-slash path. Requires jq on PATH.",
+  "//": "MERGE these three entries into ~/.claude/settings.json — never overwrite the user's file. User scope is mandatory: settings.json does not cascade, and these must fire in every session under {{ROOT_DIR}}. Substitute {{VAULT_DIR}} with a forward-slash path. Requires jq on PATH.",
   "hooks": {
     "PostToolUse": [
       {
@@ -20,6 +20,18 @@
             "type": "command",
             "command": "bash \"{{VAULT_DIR}}/.claude/hooks/stop-nudge.sh\"",
             "statusMessage": "Vault bookkeeping check..."
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"{{VAULT_DIR}}/.claude/hooks/guard-git.sh\"",
+            "statusMessage": "git guard: staging + commit convention..."
           }
         ]
       }
