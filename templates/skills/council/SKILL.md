@@ -1,6 +1,6 @@
 ---
 name: council
-version: 1.2.0
+version: 1.3.0
 description: Convene three fresh-context seats (simplicity, robustness, domain) to judge a design fork before acting on it, then record the decision with its dissent. Use without being asked whenever a plan step or an imminent edit has two or more viable options, or touches a migration, a contract or DTO shape, a data model, a cross-service edge, or anything hard to reverse after deploy. Also use when the user says "council", "/council", "get a second opinion", or "what would the seats say".
 argument-hint: "<the fork, or the ticket id whose plan has one>"
 ---
@@ -40,7 +40,10 @@ Options: A <one line>; B <one line>
 - robustness: <preferred> - <one line>
 - domain: <preferred> - <one line>
 Ruling: <option>, by <user | pending>. Dissent: <seat(s)>.
+Clears: <glob>, <glob>
 ```
+
+`Clears:` only when the fork is about a gated edit (migration, contract, DTO, event). Globs are relative to the root dev folder, forward slashes, `*` and `**`; name the file when it exists, else the narrowest folder, for example `TradeShield/TradeShield.Forge/**/Migrations/**`. The council gate honours a Clears line only once the Ruling line is no longer pending, so update the Ruling line when the user rules.
 
 Seat lines are quoted, not paraphrased: the orchestrator has been in the conversation and is biased, and quoting makes that bias a visible edit. A fork that is a small part of the ticket gets a small entry. No ticket, no file.
 
@@ -53,4 +56,4 @@ Append a `log.md` entry only when a file was written: `## [YYYY-MM-DD HH:MM] pag
 - Seats get the brief and the repo. Nothing else, ever, in round 1.
 - Two rounds is the ceiling. A seat that keeps moving is noise, not signal.
 - Never merge options into a compromise the seats did not propose.
-- The council gate hook denies edits to migration and contract paths until the ticket ledger `council.md` exists for an active ticket. If the fork is not there, tell the user and let them bypass with the marker file the hook names.
+- The council gate hook denies edits to migration and contract paths unless a ruled ledger entry in an active ticket has a `Clears:` glob matching the file. If the fork is not there, tell the user and let them bypass with the marker file the hook names.

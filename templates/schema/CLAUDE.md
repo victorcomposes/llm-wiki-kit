@@ -41,7 +41,7 @@ Mandatory for any change under `{{ROOT_DIR}}/<Service>/`.
 3. **Code.** Smallest change that implements the plan, TDD at agreed seams.
 4. **Commit.** Run the project's verification (build, tests) and show the result, then commit and open the PR only when asked. PRs go up as drafts.
 
-`council-gate` (optional hook) denies edits to migration and contract paths until an active ticket carries `council.md`; bypass for a fork the user already ruled on: `$TEMP/claude-council-off-<session_id>.txt`.
+`council-gate` (optional hook) denies edits to migration and contract paths unless a ruled `council.md` entry in an active ticket has a `Clears:` glob matching the file; bypass for a fork the user already ruled on: `$TEMP/claude-council-off-<session_id>.txt`.
 
 If a plan gate hook is installed, it denies edits to service code until an active ticket carries a fleshed `plan.md`; the loop is the rule, the hook is optional enforcement.
 
