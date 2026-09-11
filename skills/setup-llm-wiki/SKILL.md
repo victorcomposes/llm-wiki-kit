@@ -1,6 +1,6 @@
 ---
 name: setup-llm-wiki
-version: 1.5.0
+version: 1.6.0
 description: Bootstrap a Karpathy-style LLM Wiki (Obsidian vault + agent schema + the onboard/ticket/ingest/capture/query/journal/spark/lint skills, enforcement hooks, and companion-skill recommendations) into a directory of the user's choosing. Use when the user says "set up the LLM wiki", "set up an LM wiki", "install the wiki", "bootstrap a knowledge vault", "/setup-llm-wiki", "update the wiki skills", or asks any agent to stand up or upgrade the LLM-wiki system for one or many projects.
 ---
 
@@ -187,6 +187,7 @@ Copy each skill directory from `templates/skills/` to the chosen scope (`~/.clau
 6. **journal** — daily/session record.
 7. **spark** — *(skip if builder-session module disabled)* mines the vault for prototype candidates.
 8. **lint** — health-check; depends on the others having produced content.
+9. **council** — *(optional)* judges a design fork with three fresh-context seats before the edit. Also copy `templates/agents/council-*.md` to `~/.claude/agents/` (or `{{ROOT_DIR}}/.claude/agents/`), substituting placeholders; the skill spawns them by name.
 
 ---
 
@@ -195,11 +196,11 @@ Copy each skill directory from `templates/skills/` to the chosen scope (`~/.clau
 Hooks follow the layout rule: **logic in the vault (versioned), pointers at user level (reach)**. `settings.json` does NOT cascade up the directory tree — a vault-level hook only fires in vault sessions — so the two hooks that must fire in *every* session under `{{ROOT_DIR}}` (capture-nudge, stop-nudge) are referenced from `~/.claude/settings.json`, while the vault-only hooks (secret-scan, lint-reminder) live in `{{VAULT_DIR}}/.claude/settings.json`.
 
 1. **Copy the scripts** from `templates/hooks/` to `{{VAULT_DIR}}/.claude/hooks/`, substituting placeholders:
-   - Windows: `capture-nudge.ps1`, `stop-nudge.ps1` (native backslash paths inside) + `secret-scan.sh`, `lint-reminder.sh` (forward-slash paths — they run under Git Bash).
-   - macOS/Linux: `capture-nudge.sh`, `stop-nudge.sh`, `secret-scan.sh`, `lint-reminder.sh` (all forward-slash). Run `chmod +x` on them.
+   - Windows: `capture-nudge.ps1`, `stop-nudge.ps1`, `council-gate.ps1` if council was installed (native backslash paths inside) + `secret-scan.sh`, `lint-reminder.sh` (forward-slash paths — they run under Git Bash).
+   - macOS/Linux: `capture-nudge.sh`, `stop-nudge.sh`, `council-gate.sh` if council was installed, `secret-scan.sh`, `lint-reminder.sh` (all forward-slash). Run `chmod +x` on them.
    - In `.sh` files **always** substitute `{{ROOT_DIR}}`/`{{VAULT_DIR}}` with forward-slash paths, even on Windows.
 2. **Write the vault-scope settings**: copy `templates/hooks/vault-settings.json` to `{{VAULT_DIR}}/.claude/settings.json` (substituted). If the file already exists, merge the `hooks` entries instead of overwriting.
-3. **Merge the user-scope entries** from `user-settings-hooks.windows.json` or `.posix.json` (per OS) into `~/.claude/settings.json`. **Never overwrite this file** — it holds the user's model/theme/other hooks. Read it, merge the `PostToolUse` and `Stop` entries into the existing `hooks` object (create it if absent), drop the `"//"` comment key, show the user the resulting diff, and write only on confirmation. If the user already has a Stop hook, append ours as an additional entry rather than replacing theirs.
+3. **Merge the user-scope entries** from `user-settings-hooks.windows.json` or `.posix.json` (per OS) into `~/.claude/settings.json`. **Never overwrite this file** — it holds the user's model/theme/other hooks. Read it, merge the `PostToolUse`, `PreToolUse` and `Stop` entries into the existing `hooks` object (create it if absent), drop the `"//"` comment key, show the user the resulting diff, and write only on confirmation. If the user already has a Stop hook, append ours as an additional entry rather than replacing theirs.
 4. **Tell the user the activation gotcha**: hooks added mid-session don't fire until `/hooks` is opened or a new session starts.
 5. The vault-scope files are versioned — they'll be picked up by the vault's first commit.
 

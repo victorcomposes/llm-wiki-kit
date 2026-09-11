@@ -34,6 +34,16 @@
             "statusMessage": "git guard: staging + commit convention..."
           }
         ]
+      },
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"{{VAULT_DIR}}/.claude/hooks/council-gate.sh\"",
+            "statusMessage": "Council gate: migration/contract path check..."
+          }
+        ]
       }
     ]
   }

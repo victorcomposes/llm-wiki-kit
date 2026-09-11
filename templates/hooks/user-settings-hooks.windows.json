@@ -37,6 +37,17 @@
             "shell": "powershell"
           }
         ]
+      },
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "& '{{VAULT_DIR}}\\.claude\\hooks\\council-gate.ps1'",
+            "statusMessage": "Council gate: migration/contract path check...",
+            "shell": "powershell"
+          }
+        ]
       }
     ]
   }
