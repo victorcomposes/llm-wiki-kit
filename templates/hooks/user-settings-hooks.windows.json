@@ -49,6 +49,18 @@
           }
         ]
       }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "& '{{VAULT_DIR}}\\.claude\\hooks\\council-prompt.ps1'",
+            "statusMessage": "Council trigger: design-idea check...",
+            "shell": "powershell"
+          }
+        ]
+      }
     ]
   }
 }

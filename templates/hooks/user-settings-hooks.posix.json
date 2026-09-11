@@ -45,6 +45,17 @@
           }
         ]
       }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"{{VAULT_DIR}}/.claude/hooks/council-prompt.sh\"",
+            "statusMessage": "Council trigger: design-idea check..."
+          }
+        ]
+      }
     ]
   }
 }

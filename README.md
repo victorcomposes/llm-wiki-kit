@@ -80,7 +80,7 @@ The kit deliberately does **not** vendor third-party skills — the installer of
 
 ## Hooks (optional, recommended — Claude Code only)
 
-Without hooks everything still works, but knowledge capture is honor-system. With them, the standing rules are **enforced**. The installer offers six (`templates/hooks/`):
+Without hooks everything still works, but knowledge capture is honor-system. With them, the standing rules are **enforced**. The installer offers seven (`templates/hooks/`):
 
 | Hook | Event / scope | What it does |
 |---|---|---|
@@ -90,6 +90,7 @@ Without hooks everything still works, but knowledge capture is honor-system. Wit
 | `lint-reminder` | SessionStart, vault `settings.json` | One-line tip when the last `/lint` is 7+ days old. |
 | `guard-git` | PreToolUse on Bash, user `settings.json` | Denies `git add -A` / `-f`, and any commit whose subject is not `{{TICKET_PREFIX}}-NNNN <summary>` (or `<op>: <summary>` in the vault) or that carries a body. Makes the section 6 git rules deterministic instead of advisory. |
 | `council-gate` | PreToolUse on Edit/Write, user `settings.json` | Denies an edit to a migration or contract path until an active ticket carries `council.md`, written by `/council` (three fresh-context seats judge the fork, decision recorded with dissent). Agents in `templates/agents/`. |
+| `council-prompt` | UserPromptSubmit, user `settings.json` | On an idea-shaped prompt (idea verb plus design noun, or the word `council`), injects the instruction to convene `/council` before agreeing or recommending. `no council` in the prompt skips it. |
 
 Layout rule: **logic in the vault (versioned), pointers at user level (reach)** — `settings.json` doesn't cascade, so the three session-wide hooks must be referenced from `~/.claude/settings.json` (the installer merges, never overwrites). Windows uses the PowerShell nudge variants; macOS/Linux use the bash variants, which require `jq`. `secret-scan`/`lint-reminder` are bash everywhere (Git Bash on Windows). Hooks added mid-session activate only after `/hooks` is opened or a new session starts.
 

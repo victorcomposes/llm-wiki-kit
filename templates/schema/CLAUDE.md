@@ -13,7 +13,7 @@ Vault: `{{VAULT_DIR}}/` (its own git repo).
 
 ## 2. Skills
 
-`/onboard` before any work. `/capture` before ending a session that touched a service. Other wiki skills: `/ticket`, `/ingest`, `/journal`, `/lint`, `/query`, and `/spark` if the builder-session module is installed. Companion skills, where installed: `/grilling` on a plan before approval; `/council` when a plan step or an imminent edit has a genuine fork (self-invoked, not waited for); `/handoff` writes `tickets/<id>/handoff.md` plus a `log.md` entry; `/implement` builds an approved plan.
+`/onboard` before any work. `/capture` before ending a session that touched a service. Other wiki skills: `/ticket`, `/ingest`, `/journal`, `/lint`, `/query`, and `/spark` if the builder-session module is installed. Companion skills, where installed: `/grilling` on a plan before approval; `/council` when a plan step, an imminent edit, or an idea typed in chat has a genuine fork (self-invoked, not waited for; the optional `council-prompt` hook injects the reminder on idea-shaped prompts, `no council` skips it); `/handoff` writes `tickets/<id>/handoff.md` plus a `log.md` entry; `/implement` builds an approved plan.
 
 ## 3. Wiki conventions
 

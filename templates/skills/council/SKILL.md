@@ -1,6 +1,6 @@
 ---
 name: council
-version: 1.1.0
+version: 1.2.0
 description: Convene three fresh-context seats (simplicity, robustness, domain) to judge a design fork before acting on it, then record the decision with its dissent. Use without being asked whenever a plan step or an imminent edit has two or more viable options, or touches a migration, a contract or DTO shape, a data model, a cross-service edge, or anything hard to reverse after deploy. Also use when the user says "council", "/council", "get a second opinion", or "what would the seats say".
 argument-hint: "<the fork, or the ticket id whose plan has one>"
 ---
@@ -11,7 +11,7 @@ Judge a design fork with three seats that cannot see each other's reasoning, the
 
 Write the brief before spawning anything. One paragraph plus a list:
 - The decision in one sentence.
-- Options A, B, (C). Each in one or two lines. "Do nothing" counts if viable.
+- Options A, B, (C). Each in one or two lines. "Do nothing" counts if viable. For an idea typed in chat, the idea is A and the status quo or the nearest existing pattern is B.
 - The files and services the fork touches, as paths.
 - The ticket id.
 
