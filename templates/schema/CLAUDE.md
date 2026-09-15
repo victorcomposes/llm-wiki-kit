@@ -19,12 +19,12 @@ Vault: `{{VAULT_DIR}}/` (its own git repo).
 
 - `[[Wikilinks]]` between vault pages, plain markdown links into repos. Unresolved wikilinks are fine; `/lint` flags them.
 - Frontmatter on every page: `type:` (service | concept | incident | runbook | standard | meta | ticket | journal | decision), `date:`, optional `tags:`, `source:`, `source-count:`.
-- `log.md` entry: `## [YYYY-MM-DD HH:MM] <action> | <one-line summary>`. Run `date` first; never guess the stamp.
+- `log.md` entry: `## [YYYY-MM-DD HH:MM] <action> | <one-line summary>`. Run `date` first; never guess the stamp. Append with a surgical edit anchored on the last line, not a shell heredoc: the shell collapses the escapes, and an append bundled with `git commit` in one call can leave a commit hook reading the log line as the commit subject. Append and commit are separate calls.
 - Service folder-notes: scaffold lazily, one folder per repo, no stub pages. Frontmatter declares outbound edges with exactly these keys, each an array of `[[Service]]` links, empty arrays kept: `calls`, `depends_on`, `emits_events_to`, `subscribes_to`. Inbound edges are derived, never hand-written. Non-obvious edges get a line in `## Relationships`. Rebuild `wiki/concepts/service-graph.md` whenever an edge changes.
 - New concept page when an idea recurs in 2+ sources, otherwise extend. On contradiction add `> [!warning] Updated <date>` above the section; never rewrite history.
 - Domain model lives only in the vault: per-service `CONTEXT.md`, global `[[ubiquitous-language]]`, ADRs in `wiki/decisions/`. Create each lazily. Name domain types in the words a domain expert uses, not modeller jargon.
 - **Provenance on every substantive claim.** Observed = you ran or read it; cite inline `<!-- observed YYYY-MM-DD: File.cs:41 -->` or the command or sha. Inferred = one symptom or one source; file it only as `> [!question] Unverified (YYYY-MM-DD): <claim>. Confirm by <check>.`, never as an assertion. Same marking on anything you send another agent. A bare assertion you receive is unverified until you check it.
-- **Capture as you go.** Anything substantive learned about a service (subsystem mechanics, non-obvious path, constraint, relationship, gotcha) goes into its folder-note before the session ends, linked to `[[{{TICKET_PREFIX}}-NNNN]]`, not only into the ticket. Observed facts file freely; inferences only as questions.
+- **Capture as you go.** Anything substantive learned about a service (subsystem mechanics, non-obvious path, constraint, relationship, gotcha) goes into its folder-note before the session ends, linked to `[[{{TICKET_PREFIX}}-NNNN]]`, not only into the ticket. Observed facts file freely; inferences only as questions. Capture needs no permission: a gotcha you confirmed goes into the folder-note and the log in the same session, and stopping to ask first is how it gets lost.
 - **Prototype seeds** (builder-session module, if installed). Friction worth a short spike gets a one-line seed in `wiki/concepts/prototype-ideas.md` (pitch, pain wikilink, ambition, `status: seed`).
 
 ## 4. Tickets
@@ -47,7 +47,7 @@ If a plan gate hook is installed, it denies edits to service code until an activ
 
 Also:
 - Before debugging a frontend, confirm every dependency service is actually up; a service that is up but missing a dependency looks healthy and fails at runtime.
-- Code navigation: language-server tools first when the session is rooted in the repo, text search when rooted in the vault.
+- Code navigation: language-server tools first when the session is rooted in the repo, text search when rooted in the vault. Use the agent's own search tools, scoped to one service path; do not shell out to `grep`, `sed`, `find` or a scripting runtime for search or analysis, since script execution is often denied in that position and an unscoped sweep of `{{ROOT_DIR}}` times out.
 - When compacting, preserve the active ticket id, the list of modified files, the verify command, and any open `> [!question]` items.
 
 ## 6. Git
