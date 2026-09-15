@@ -1,7 +1,7 @@
 ---
 name: council
-version: 2.0.0
-description: Convene fresh-context seats from a fixed roster (simplicity, robustness, domain always on code; contrarian, delivery, risk, experience when they fit) to judge a design fork before acting on it, then record the decision with its dissent and the full seat reports. Use without being asked whenever a plan step or an imminent edit has two or more viable options, or touches a migration, a contract or DTO shape, a data model, a cross-service edge, or anything hard to reverse after deploy. Also use when the user says "council", "/council", "get a second opinion", or "what would the seats say".
+version: 2.1.0
+description: Convene fresh-context seats from a fixed roster (simplicity, robustness, domain, contrarian on every fork; delivery, risk, experience when a roster signal matches) to judge a design fork before acting on it, then record the decision with its dissent and the full seat reports. Use without being asked whenever a plan step or an imminent edit has two or more viable options, or touches a migration, a contract or DTO shape, a data model, a cross-service edge, or anything hard to reverse after deploy. Also use when the user says "council", "/council", "get a second opinion", or "what would the seats say".
 argument-hint: "<the fork, or the ticket id whose plan has one>"
 ---
 
@@ -14,10 +14,12 @@ Read `references/roster.md`. Write the brief before spawning anything. One parag
 - Options A, B, (C). Each in one or two lines. "Do nothing" counts if viable. For an idea typed in chat, the idea is A and the status quo or the nearest existing pattern is B.
 - The files and services the fork touches, as paths.
 - The ticket id.
-- `Seats:` the seats convened, one line each: name and why this fork needs it. Core seats always run on a fork that touches code. Optional seats run when their roster "convene when" line fits.
-- `Left out:` every optional seat not convened, half a line each, so the user can pull one back by name.
 
-Only roster seats. A perspective the roster lacks is a proposed edit to `references/roster.md`, never a one-off seat.
+Then select the slate, on every fork, whatever the topic. The four core seats are always in. For each optional seat, check every `Signals:` line in the roster against the touched paths and the decision and option lines, nothing else. Write one line per seat:
+- `Seats:` core seats by name, then each matched optional seat with the signal that matched, quoted.
+- `Left out:` each unmatched optional seat with its nearest-miss signal, so the user can pull it back by name.
+
+One matched signal is enough to convene. Never drop a matched seat to keep the slate small; never add an unmatched seat on a hunch. Only roster seats. A perspective the roster lacks is a proposed edit to `references/roster.md`, never a one-off seat.
 
 If you cannot write two viable options, there is no fork. Say so and stop.
 
@@ -33,9 +35,7 @@ Spawn every seat in the slate in one message so they run together. Each gets the
 
 ## Step 3 - Round 2, once
 
-If every seat prefers the same option and contrarian was not in the slate, spawn `council-contrarian` once with the brief plus the verdicts verbatim. Its answer is recorded as dissent or confirmation. Then stop.
-
-If every seat prefers the same option and contrarian was in the slate, skip this round.
+If every seat prefers the same option, skip this round. Contrarian sat in round 1, so unanimity has already survived an attack.
 
 Otherwise send each seat the other seats' answers verbatim and one instruction: hold or move, with the reason in one sentence, same output shape. One round. Do not ask again.
 
@@ -61,12 +61,14 @@ Seats: <names>. Left out: <names, or none>.
 - simplicity: <preferred> (<hold | moved from X>) - "<one quoted line>"
 - robustness: <preferred> - "<one quoted line>"
 - domain: <preferred> - "<one quoted line>"
+- contrarian: <preferred> - "<one quoted line>"
+- <optional seat>: <preferred> - "<one quoted line>"
 Ruling: pending (<option> recommended). Dissent: <seat(s), or none>.
 Brief corrected: <a seat's Brief wrong line, when any>
 Facts closed: <what the orchestrator verified between rounds, when any>
 Open: <what nobody could close, when any>
 Clears: <glob>, <glob>
-Reports: [simplicity](council/<date>-<slug>/simplicity.md), [robustness](...), [domain](...)
+Reports: [simplicity](council/<date>-<slug>/simplicity.md), [robustness](...), [domain](...), [contrarian](...)
 ```
 
 When the user rules, edit the Ruling line to `Ruling: <option>, by <user>.` and nothing else. `Brief corrected`, `Facts closed` and `Open` appear only when non-empty. `Reports:` links are path-qualified markdown, never wikilinks, because seat filenames repeat across forks.
@@ -82,7 +84,7 @@ Append a `log.md` entry only when a file was written: `## [YYYY-MM-DD HH:MM] pag
 ## Rules
 
 - Seats get the brief and the repo. Nothing else, ever, in round 1.
-- Only roster seats. Propose a roster edit instead of inventing one.
+- Only roster seats, selected by roster signals on every fork. Propose a roster edit instead of inventing a seat or a signal.
 - The gate is non-negotiable when the user typed "council", unless they wrote `no council`. It never applies to a self-invoked run.
 - Two rounds is the ceiling. A seat that keeps moving is noise, not signal.
 - Never merge options into a compromise the seats did not propose.
