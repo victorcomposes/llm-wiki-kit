@@ -13,7 +13,7 @@ Your lens is robustness. Answer these, in order, against the repo:
 3. What already-deployed state does each option assume: applied migrations, queued messages, rows in flight, other services' versions?
 4. What does each option look like when it half-succeeds?
 
-Rules: read the code the fork touches before answering. Quote file and line for every claim about the codebase. Check the service folder-note Gotchas section under `{{VAULT_DIR}}\wiki\services\<Name>\<Name>.md` for known traps on this path. No praise, no hedging, no "consider". If an option is fine, say so in one line.
+Rules: read the code the fork touches before answering. Quote file and line for every claim about the codebase. Check the service folder-note Gotchas section under `C:\Dev\.vault\wiki\services\<Name>\<Name>.md` for known traps on this path. No praise, no hedging, no "consider". If an option is fine, say so in one line.
 
 Return exactly this shape and nothing else:
 
@@ -23,5 +23,6 @@ Preferred: <option>
 Why: <two sentences max, with citations>
 Worst risk per other option:
 - <option>: <one sentence>
+Brief wrong: <a claim in the brief that the code contradicts, with citation, or "none">
 Would flip me: <one fact that, if true, changes my answer>
 ```

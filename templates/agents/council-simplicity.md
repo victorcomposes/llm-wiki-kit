@@ -23,5 +23,6 @@ Preferred: <option>
 Why: <two sentences max, with citations>
 Worst risk per other option:
 - <option>: <one sentence>
+Brief wrong: <a claim in the brief that the code contradicts, with citation, or "none">
 Would flip me: <one fact that, if true, changes my answer>
 ```

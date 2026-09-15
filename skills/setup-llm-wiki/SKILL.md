@@ -189,7 +189,7 @@ Copy each skill directory from `templates/skills/` to the chosen scope (`~/.clau
 6. **journal** — daily/session record.
 7. **spark** — *(skip if builder-session module disabled)* mines the vault for prototype candidates.
 8. **lint** — health-check; depends on the others having produced content.
-9. **council** — *(optional)* judges a design fork with three fresh-context seats before the edit. Also copy `templates/agents/council-*.md` to `~/.claude/agents/` (or `{{ROOT_DIR}}/.claude/agents/`), substituting placeholders; the skill spawns them by name.
+9. **council** — *(optional)* judges a design fork with fresh-context seats from `references/roster.md` (three core, four optional) before the edit. Also copy all seven `templates/agents/council-*.md` to `~/.claude/agents/` (or `{{ROOT_DIR}}/.claude/agents/`), substituting placeholders; the skill spawns them by name.
 
 ---
 

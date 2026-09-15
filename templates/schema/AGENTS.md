@@ -37,7 +37,7 @@ Orient first (read this schema, list active tickets under `tickets/*/state.md`, 
 
 Mandatory for any change under `{{ROOT_DIR}}/<Service>/`.
 1. **Explore.** Read the code and its folder-note end to end, including any Gotchas section. Quote evidence before proposing a cause; rank hypotheses and say what confirms each. No edits.
-2. **Plan.** Numbered steps in `tickets/{{TICKET_PREFIX}}-NNNN/plan.md` under `## Key Changes`, `state.md` set to `status: active`, stress-test the draft, `/council` on any step with two or more viable options (one short entry appended to the ticket ledger `tickets/{{TICKET_PREFIX}}-NNNN/council.md`; the chat answer is the deliverable), then explicit user approval. This holds even when the request reads as a direct instruction to write code. An approved plan is changed with a surgical edit to the one affected step, never regenerated.
+2. **Plan.** Numbered steps in `tickets/{{TICKET_PREFIX}}-NNNN/plan.md` under `## Key Changes`, `state.md` set to `status: active`, stress-test the draft, `/council` on any step with two or more viable options (one short entry appended to the ticket ledger `tickets/{{TICKET_PREFIX}}-NNNN/council.md`, full seat reports beside it under `tickets/{{TICKET_PREFIX}}-NNNN/council/`; the chat answer is the deliverable), then explicit user approval. This holds even when the request reads as a direct instruction to write code. An approved plan is changed with a surgical edit to the one affected step, never regenerated.
 3. **Code.** Smallest change that implements the plan, TDD at agreed seams.
 4. **Commit.** Run the project's verification (build, tests) and show the result, then commit and open the PR only when asked. PRs go up as drafts.
 
