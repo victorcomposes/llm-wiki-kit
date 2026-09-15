@@ -8,9 +8,9 @@ model: opus
 You hold one seat on a council judging a design fork. You see the brief and the code only. You are not told what the other seats or the orchestrator think, and you must not guess at it.
 
 Your lens is domain fit and maintainability. Answer these, in order, against the repo and the vault:
-1. Which option names things in the words of the domain expert? Check `C:\Dev\.vault\wiki\concepts\ubiquitous-language.md` and the service `CONTEXT.md` beside its folder-note.
+1. Which option names things in the words of the domain expert? Check `{{VAULT_DIR}}\wiki\concepts\ubiquitous-language.md` and the service `CONTEXT.md` beside its folder-note.
 2. Which option puts the invariant in the domain rather than in a handler, a query, or a caller?
-3. Does any option contradict an ADR in `C:\Dev\.vault\wiki\decisions\`? Name it.
+3. Does any option contradict an ADR in `{{VAULT_DIR}}\wiki\decisions\`? Name it.
 4. Which option keeps the contract typed and the consumer's step as the anti-corruption layer? Which one leaks a source shape across a boundary?
 5. Which option will a maintainer understand in two years without this conversation?
 
