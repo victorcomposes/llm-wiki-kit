@@ -35,6 +35,13 @@
             "command": "& '{{VAULT_DIR}}\\.claude\\hooks\\guard-git.ps1'",
             "statusMessage": "git guard: staging + commit convention...",
             "shell": "powershell"
+          },
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "bash \"{{VAULT_DIR}}/.claude/hooks/secret-scan.sh\"",
+            "timeout": 15,
+            "statusMessage": "Scanning staged vault changes for secrets"
           }
         ]
       },

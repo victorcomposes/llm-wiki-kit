@@ -43,9 +43,9 @@ A seat matched by one signal is in. Never drop a matched seat to keep the slate 
 - Signals: touched paths contain `Auth`, `Identity`, `Security`, `Secrets`, `appsettings`, `KeyVault`, `Http`, `Client`, `Integration`, `Webhook`, or a `Controllers` folder; the decision or an option names a token, a credential, a third party, personal or financial data, an audit, or a regulator.
 
 ## experience (optional)
-- Lens: the domain expert or customer on the receiving end.
-- Flags: copy, friction, internal-looking changes that hurt the user, unstated assumptions about how people work.
-- Signals: touched paths contain a frontend folder, `.html`, `.ts` under a frontend folder, `Templates`, `Email`, `Notification`, `Views`, `Resources`, or `.resx`; the decision or an option names a screen, a label, a status the user sees, a message, an email, copy, or wording.
+- Lens: whoever is on the receiving end - usually the domain expert or customer, and on internal tooling the operator who has to live with it.
+- Flags: copy, friction, internal-looking changes that hurt the user, unstated assumptions about how people work; on tooling, a wrong answer with no error, and having to know which pane or mode can do what.
+- Signals: touched paths contain a frontend folder, `.html`, `.ts` under a frontend folder, `Templates`, `Email`, `Notification`, `Views`, `Resources`, or `.resx`; the decision or an option names a screen, a label, a status the user sees, a message, an email, copy, or wording. **Operator ergonomics:** touched paths contain `scripts/`, `.claude/hooks/`, a user-scope agent config folder, a `SKILL.md`, or a `CLAUDE.md`; or the decision or an option names a pane, tab, workspace, session, prompt, slash command, or what the agent does by default.
 
 ## Adding a seat
 Copy a block: `## <name> (<tier>)`, Lens, Flags, and either `Convene when: always` for core or `Signals:` for optional. Write the matching `~/.claude/agents/council-<name>.md` from an existing seat, keeping the preamble, tools, model and output shape. If the new seat overlaps an existing one, sharpen the difference or merge.

@@ -41,9 +41,8 @@ If a write doesn't fit any of those, stop and ask the user where it belongs.
 
 ## Don't do these things inside the vault
 
-- Don't hand-edit `wiki/` pages without a reason; `/ingest` is the normal write path.
-- Don't break the `log.md` append-only rule. If you must correct an entry, append a correction below — never edit in place.
-- Don't write absolute paths into wiki content. Use wikilinks or paths relative to `{{VAULT_DIR}}`.
+- Don't break the `log.md` append-only rule. If you must correct an entry, append a correction below - never edit in place.
+- The rules for *writing* vault files (atomic temp-then-rename, no absolute paths, `/ingest` as the write path) are in the root schema, because a session rooted in a service repo writes vault files too and never loads this file.
 - Don't commit `.obsidian/workspace*.json` (gitignored — it's per-machine cache).
 
 ## When in doubt

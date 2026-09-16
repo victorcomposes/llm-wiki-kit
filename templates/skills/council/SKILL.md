@@ -1,6 +1,6 @@
 ---
 name: council
-version: 2.1.0
+version: 2.2.0
 description: Convene fresh-context seats from a fixed roster (simplicity, robustness, domain, contrarian on every fork; delivery, risk, experience when a roster signal matches) to judge a design fork before acting on it, then record the decision with its dissent and the full seat reports. Use without being asked whenever a plan step or an imminent edit has two or more viable options, or touches a migration, a contract or DTO shape, a data model, a cross-service edge, or anything hard to reverse after deploy. Also use when the user says "council", "/council", "get a second opinion", or "what would the seats say".
 argument-hint: "<the fork, or the ticket id whose plan has one>"
 ---
