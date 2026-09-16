@@ -130,13 +130,15 @@ Create `{{VAULT_DIR}}` and copy the `templates/vault/` tree into it, substitutin
 │   ├── incidents/
 │   ├── runbooks/
 │   ├── standards/
-│   │   └── ai-style-guide.md     # house style + the standing-card report format
+│   │   ├── ai-style-guide.md     # house style + the standing-card report format
+│   │   └── pull-requests.md      # PR body, checklist, comments, what never gets pushed
 │   └── _assets/
 └── tickets/                         # only if tickets enabled
 ```
 
 - Copy `templates/vault/CLAUDE.md` to `{{VAULT_DIR}}/CLAUDE.md` (the **vault root**, not `wiki/_assets/`), substituting `{{ROOT_DIR}}` / `{{VAULT_DIR}}` / `{{TICKET_PREFIX}}`. This is the vault-scoped agent schema (auto-loads when cwd is inside the vault). It lives at the vault root so it isn't an orphan inside the wiki and is unambiguous to agents.
 - If the builder-session module is enabled (Step 1.7): copy `templates/vault/wiki/concepts/prototype-ideas.md` to `{{VAULT_DIR}}/wiki/concepts/prototype-ideas.md` and list it under `## Concepts` in `wiki/index.md`. Remind the user to replace the placeholder session brief with their team's own.
+- Copy `templates/vault/wiki/standards/pull-requests.md` to `{{VAULT_DIR}}/wiki/standards/pull-requests.md`, substituting `{{TICKET_PREFIX}}` / `{{TRACKER_NAME}}` / `{{TODAY}}`. The root schema's section 5 step 4 points at it by wikilink. Its mechanics are deliberately host-agnostic; tell the user to add a **Host-specific** section the first time their host costs them a round. List it under `## Standards` in `wiki/index.md`.
 - Copy `templates/vault/wiki/standards/ai-style-guide.md` to `{{VAULT_DIR}}/wiki/standards/ai-style-guide.md`, substituting `{{TICKET_PREFIX}}` / `{{TODAY}}`. The root schema's House style section points at it by wikilink, so it must exist at bootstrap or the standing-card rule resolves to nothing. List it under `## Standards` in `wiki/index.md`.
 - Copy `templates/vault/wiki/concepts/service-graph.md` to `{{VAULT_DIR}}/wiki/concepts/service-graph.md`. This is the rolled-up view of all service relationships — the file starts empty (no edges declared yet) but is created at bootstrap so the schema's references to `[[service-graph]]` resolve immediately. The agent fills it as soon as service relationship frontmatter is populated. List it under `## Concepts` in `wiki/index.md`.
 - For **multiple-services**: use the final curated list from Step 1.3. Before writing, **echo the final list back to the user** as `wiki/services/<Name>/<Name>.md → <source path under {{ROOT_DIR}}>` and ask for confirmation. On confirm, for each service create:

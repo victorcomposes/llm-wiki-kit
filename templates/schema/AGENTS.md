@@ -40,7 +40,7 @@ Mandatory for any change under `{{ROOT_DIR}}/<Service>/`.
 1. **Explore.** Read the code and its folder-note end to end, including any Gotchas section. Quote evidence before proposing a cause; rank hypotheses and say what confirms each. No edits.
 2. **Plan.** Numbered steps in `tickets/{{TICKET_PREFIX}}-NNNN/plan.md` under `## Key Changes`, `state.md` set to `status: active`, stress-test the draft, `/council` on any step with two or more viable options (one short entry appended to the ticket ledger `tickets/{{TICKET_PREFIX}}-NNNN/council.md`, full seat reports beside it under `tickets/{{TICKET_PREFIX}}-NNNN/council/`; the chat answer is the deliverable), then explicit user approval. This holds even when the request reads as a direct instruction to write code. An approved plan is changed with a surgical edit to the one affected step, never regenerated.
 3. **Code.** Smallest change that implements the plan, TDD at agreed seams.
-4. **Commit.** Run the project's verification (build, tests) and show the result, then commit and open the PR only when asked. PRs go up as drafts.
+4. **Commit.** Run the project's verification (build, tests) and show the result, then commit and open the PR only when asked. PRs go up as drafts. Read [[pull-requests]] before writing any PR body, comment or update: it carries the lean-body shape, the checklist strikethrough rule, the `#N` autolink trap, and what must never reach a pushed branch.
 
 `council-gate` (optional hook) denies edits to migration and contract paths unless a ruled `council.md` entry in an active ticket has a `Clears:` glob matching the file; bypass for a fork the user already ruled on: `$TEMP/claude-council-off-<session_id>.txt`.
 
