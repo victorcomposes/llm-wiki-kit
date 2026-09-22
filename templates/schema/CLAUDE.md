@@ -33,6 +33,7 @@ Vault: `{{VAULT_DIR}}/` (its own git repo).
 - Real ids `{{TICKET_PREFIX}}-NNNN` ({{TRACKER_NAME}}: {{TRACKER_URL}}). Placeholders `VLT-NNNN`, never an invented `{{TICKET_PREFIX}}-`. On rename, rewrite live references and append a `log.md` entry.
 - `state.md` frontmatter: `ticket`, `status` (active | investigated | implemented-pending-review | done), `created`, `services: []`, `branches: []`, `tickets-related: []`.
 - Done: `status: done`, `plan.md` reflects what shipped, `log.md` done entry, then `git mv tickets/{{TICKET_PREFIX}}-NNNN tickets/_archive/{{TICKET_PREFIX}}-NNNN`. Routine readers skip the archive. Reopen with `git mv` back, never a fresh folder.
+- Merged PR: tear down everything the ticket opened (panes, running services, worktree, branches) in the same turn, in the order a `ticket-teardown` runbook keeps.
 
 ## 5. Code changes: Explore, Plan, Code, Commit
 
@@ -47,6 +48,8 @@ Mandatory for any change under `{{ROOT_DIR}}/<Service>/`.
 If a plan gate hook is installed, it denies edits to service code until an active ticket carries a fleshed `plan.md`; the loop is the rule, the hook is optional enforcement.
 
 Also:
+- Databases and environments: local only. Never connect to a shared or production environment, not even read-only. To verify there, write the query, say which result proves it, and hand it to the human.
+- Agent memory is scoped per project directory, so repo sessions never see what a vault session files there. A rule repo sessions need goes in this schema or a standard, never only in memory.
 - Before debugging a frontend, confirm every dependency service is actually up; a service that is up but missing a dependency looks healthy and fails at runtime.
 - Code navigation: language-server tools first when the session is rooted in the repo, text search when rooted in the vault. Use the agent's own search tools, scoped to one service path; do not shell out to `grep`, `sed`, `find` or a scripting runtime for search or analysis, since script execution is often denied in that position and an unscoped sweep of `{{ROOT_DIR}}` times out.
 - When compacting, preserve the active ticket id, the list of modified files, the verify command, and any open `> [!question]` items.
