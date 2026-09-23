@@ -31,7 +31,7 @@ Vault: `{{VAULT_DIR}}/` (its own git repo).
 ## 4. Tickets
 
 - Real ids `{{TICKET_PREFIX}}-NNNN` ({{TRACKER_NAME}}: {{TRACKER_URL}}). Placeholders `VLT-NNNN`, never an invented `{{TICKET_PREFIX}}-`. On rename, rewrite live references and append a `log.md` entry.
-- `state.md` frontmatter: `ticket`, `status` (active | investigated | implemented-pending-review | done), `created`, `services: []`, `branches: []`, `tickets-related: []`.
+- `state.md` frontmatter: `ticket`, `status` (active | investigated | implemented-pending-review | done), `created`, `services: []`, `branches: []`, `tickets-related: []`, `needs-human: []` (items `{what, run, proves}` - a claim or action that needs a human to run or confirm something the agent can't; a database/environment query outside the local instance goes in `tickets/{{TICKET_PREFIX}}-NNNN/sql/NN-<slug>.sql` rather than inline).
 - Done: `status: done`, `plan.md` reflects what shipped, `log.md` done entry, then `git mv tickets/{{TICKET_PREFIX}}-NNNN tickets/_archive/{{TICKET_PREFIX}}-NNNN`. Routine readers skip the archive. Reopen with `git mv` back, never a fresh folder.
 - Merged PR: tear down everything the ticket opened (panes, running services, worktree, branches) in the same turn, in the order a `ticket-teardown` runbook keeps.
 
@@ -39,7 +39,7 @@ Vault: `{{VAULT_DIR}}/` (its own git repo).
 
 Mandatory for any change under `{{ROOT_DIR}}/<Service>/`.
 1. **Explore.** Read the code and its folder-note end to end, including any Gotchas section. Quote evidence before proposing a cause; rank hypotheses and say what confirms each. Check claims per [[verification]]. No edits.
-2. **Plan.** Numbered steps in `tickets/{{TICKET_PREFIX}}-NNNN/plan.md` under `## Key Changes`, `state.md` set to `status: active`, stress-test the draft, `/council` on any step with two or more viable options (one short entry appended to the ticket ledger `tickets/{{TICKET_PREFIX}}-NNNN/council.md`, full seat reports beside it under `tickets/{{TICKET_PREFIX}}-NNNN/council/`; the chat answer is the deliverable), then explicit user approval. This holds even when the request reads as a direct instruction to write code. An approved plan is changed with a surgical edit to the one affected step, never regenerated.
+2. **Plan.** Numbered steps in `tickets/{{TICKET_PREFIX}}-NNNN/plan.md` under `## Key Changes`, `state.md` set to `status: active`, stress-test the draft, `/council` on any step with two or more viable options (one short entry appended to the ticket ledger `tickets/{{TICKET_PREFIX}}-NNNN/council.md`, full seat reports beside it under `tickets/{{TICKET_PREFIX}}-NNNN/council/`; the chat answer is the deliverable), then explicit user approval - or approval from a delegated approver role, if the project's own standards define one and the plan step doesn't touch anything on that role's escalation list. This holds even when the request reads as a direct instruction to write code. An approved plan is changed with a surgical edit to the one affected step, never regenerated.
 3. **Code.** Smallest change that implements the plan, TDD at agreed seams.
 4. **Commit.** Run the project's verification (build, tests) and show the result, then commit and open the PR only when asked. PRs go up as drafts. Read [[pull-requests]] before writing any PR body, comment or update: it carries the lean-body shape, the checklist strikethrough rule, the `#N` autolink trap, and what must never reach a pushed branch.
 
@@ -48,6 +48,7 @@ Mandatory for any change under `{{ROOT_DIR}}/<Service>/`.
 If a plan gate hook is installed, it denies edits to service code until an active ticket carries a fleshed `plan.md`; the loop is the rule, the hook is optional enforcement.
 
 Also:
+- Outward or hard-to-reverse actions (a commit, a push, a PR publish or merge, an issue-tracker write, a database query) need explicit human approval, unless the project's own standards name a delegated-approver role and list exactly what that role may decide without asking.
 - Databases and environments: local only. Never connect to a shared or production environment, not even read-only. To verify there, write the query, say which result proves it, and hand it to the human.
 - Agent memory is scoped per project directory, so repo sessions never see what a vault session files there. A rule repo sessions need goes in this schema or a standard, never only in memory.
 - Before debugging a frontend, confirm every dependency service is actually up; a service that is up but missing a dependency looks healthy and fails at runtime.
