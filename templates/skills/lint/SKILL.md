@@ -1,6 +1,6 @@
 ---
 name: lint
-version: 1.7.0
+version: 1.8.0
 description: Health-check the wiki — broken links, orphan pages, missing state, contradictions, gaps. Reports only, does not auto-fix. Use when the user says "lint", "/lint", "health-check the wiki", "find broken links", or asks for a vault audit.
 ---
 
@@ -14,7 +14,7 @@ Walk `{{VAULT_DIR}}/` and report issues. Do not fix anything automatically — s
    - Dangling `[[…]]` inside a service folder-note's relationship arrays (`calls`, `depends_on`, `emits_events_to`, `subscribes_to`) is **owned by check 8**, not here.
    - A missing service named in a ticket's `services:` frontmatter array is **owned by check 6**, not here.
    - A catalogue entry in `index.md` pointing at a page that no longer exists is index drift, **owned by check 5** — skip wikilinks in `index.md` here.
-   - A ticket-id link (`[[{{TICKET_PREFIX}}-NNNN]]`, `[[VLT-NNNN]]`) resolves when `tickets/<id>/` or `tickets/_archive/<id>/` exists, even without an `<id>.md` note inside. Only an id with no folder in either place is broken. The same rule applies to index entries in check 5.
+   - A ticket-id link (`[[{{TICKET_PREFIX}}-NNNN]]`, `[[VLT-NNNN]]`) resolves when `tickets/<id>/` or `tickets/_archive/<id>/` exists, even without an `<id>.md` note inside. A real tracker id (`[[{{TICKET_PREFIX}}-NNNN]]`) with no folder is an external {{TRACKER_NAME}} reference, not a broken link: skip it. Only a `[[VLT-NNNN]]` placeholder with no folder in either place is broken, since placeholders exist only in the vault. The same rule applies to index entries in check 5.
 2. **Orphan pages** — pages under `{{VAULT_DIR}}/wiki/` (excluding `index.md`, `log.md`, `brag.md`, `journal/*`) with zero inbound wikilinks. Orphan means **unreachable by navigation**, so inbound links from append-only ledgers do **not** count: when tallying a page's inbound links, ignore any `[[…]]` reference whose source file is `log.md`, `journal/*`, or `brag.md`. A page reachable only through those ledgers is still an orphan. List them with their type (from frontmatter).
    - Positive (report): a concept page whose only inbound wikilink comes from `log.md` or a monthly journal — the ledger mention doesn't make it navigable, so it is an orphan.
    - Negative (don't report): a concept page linked from the body of another concept page or a service folder-note — reachable by navigation, so not an orphan even if it is also mentioned in the ledger.
