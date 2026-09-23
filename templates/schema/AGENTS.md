@@ -50,7 +50,7 @@ Also:
 - Databases and environments: local only. Never connect to a shared or production environment, not even read-only. To verify there, write the query, say which result proves it, and hand it to the human.
 - Agent memory is scoped per project directory, so repo sessions never see what a vault session files there. A rule repo sessions need goes in this schema or a standard, never only in memory.
 - Before debugging a frontend, confirm every dependency service is actually up; a service that is up but missing a dependency looks healthy and fails at runtime.
-- Code navigation: language-server tools first when the session is rooted in the repo, text search when rooted in the vault. Use the agent's own search tools, scoped to one service path; do not shell out to `grep`, `sed`, `find` or a scripting runtime for search or analysis, since script execution is often denied in that position and an unscoped sweep of `{{ROOT_DIR}}` times out.
+- Code navigation: language-server tools first when the session is rooted in the repo, text search when rooted in the vault. Use the agent's own search tools, scoped to one service path, in every session - repo-rooted included. Never shell out to `grep`, `sed`, `find`, `rg` or a scripting runtime for search or analysis: script execution is often denied in the vault-rooted position, and an unscoped sweep does worse than time out - a whole-drive walk (`find /` with no path argument) has no depth limit and can run for hours, leaking OS handles until something is killed to stop it.
 - When compacting or summarising, preserve the active ticket id, the list of modified files, the verify command, and any open `> [!question]` items.
 
 ## 6. Git
