@@ -47,6 +47,7 @@ Mandatory for any change under `{{ROOT_DIR}}/<Service>/`.
 
 Also:
 - Outward or hard-to-reverse actions (a commit, a push, a PR publish or merge, an issue-tracker write, a database query) need explicit human approval, unless the project's own standards name a delegated-approver role and list exactly what that role may decide without asking.
+- **Stopping rule.** When a step doesn't need the human's input, keep going and fold status into the same message as the next action, never a separate one. Stop and ask only when truly unable to continue without them, or for an action the rule above reserves for the human. That list is exhaustive, not illustrative: a destructive-sounding action outside it (a force-push to a feature branch, clearing a stale lock, killing a stray process) stays the agent's call under its existing safety practice.
 - Databases and environments: local only. Never connect to a shared or production environment, not even read-only. To verify there, write the query, say which result proves it, and hand it to the human.
 - Agent memory is scoped per project directory, so repo sessions never see what a vault session files there. A rule repo sessions need goes in this schema or a standard, never only in memory.
 - Before debugging a frontend, confirm every dependency service is actually up; a service that is up but missing a dependency looks healthy and fails at runtime.
