@@ -10,6 +10,10 @@ House rules for opening and updating a pull request. Root [[CLAUDE]] section 5 s
 
 Adapt the mechanics to your host ({{TRACKER_NAME}}, GitHub, GitLab, Azure DevOps). The conventions below are host-independent; anything host-specific belongs in its own section at the bottom of this page, written once someone has been burned by it.
 
+## Pre-merge review
+
+A pre-merge review against the trunk reports only issues that would block a merge, each with file, line and a reproduction; see [[verification]].
+
 ## Opening one
 
 "Create a PR" means: push the branch, then open a **draft**. Publishing is the author's call, so reviewers are not notified until they say so. Do not open a PR unprompted at the end of implementation work; wait for the ask.

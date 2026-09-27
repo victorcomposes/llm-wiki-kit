@@ -13,10 +13,10 @@ Any message that reports progress or asks for a decision uses this card, in this
 
 ````
 ## {{TICKET_PREFIX}}-NNNN - <three or four words>
+**Blocked on you.** Numbered, each one an action the reader can take. "Nothing" if nothing.
 **Problem.** One sentence, in product terms.
 **Fix.** One sentence.
 **Status.** Where it is, and whether code exists yet.
-**Blocked on you.** Numbered, each one an action the reader can take. "Nothing" if nothing.
 **Changed since last time.** One or two lines. Omit on a first report.
 ````
 
