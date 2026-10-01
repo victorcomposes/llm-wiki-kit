@@ -1,6 +1,6 @@
 ---
 name: ticket
-version: 1.7.1
+version: 1.8.0
 description: Scaffold a new ticket folder under {{VAULT_DIR}}/tickets/{{TICKET_PREFIX}}-NNNN/ with state, context, plan, notes, and create matching feature branches in affected service repos. Use when the user says "ticket {{TICKET_PREFIX}}-NNNN", "/ticket {{TICKET_PREFIX}}-NNNN", "scaffold a ticket", or "start work on {{TICKET_PREFIX}}-NNNN".
 ---
 
@@ -22,7 +22,7 @@ Create a new ticket workspace for the ticket the user named (expect a `{{TICKET_
      - **Urgency** — what is the impact or risk?
      - **Small step** — what is the next safe action?
      - **Explain** — what should I say clearly now?
-   - `plan.md` skeleton with sections `## Summary`, `## Key Changes`, `## Public Interfaces`, `## Test Plan`, `## Assumptions` — leave content empty for the agent to fill once it has read the relevant service code. `## Key Changes` is a **numbered list** so each step is individually addressable. Seed the file with this stability note at the top, under the frontmatter: `> Once approved, this plan is edited surgically — change requests touch only the named step and leave the rest verbatim (root schema §5). Reference steps by number.`
+   - `plan.md` skeleton with sections `## Summary`, `## Key Changes`, `## Public Interfaces`, `## Test Plan`, `## Assumptions` — leave content empty for the agent to fill once it has read the relevant service code. `## Key Changes` is a **numbered list** so each step is individually addressable. Seed the file with this stability note at the top, under the frontmatter: `> Once approved, this plan is edited surgically — change requests touch only the named step and leave the rest verbatim (root schema §5). Reference steps by number.` Put two empty fields in the `plan.md` frontmatter: `tier:` (T0 compile only; T1 scoped unit tests; T2 app startup plus API/integration; T3 live UI leg with an evidence pack) and `lane:` (`solo`, `led` or `bundled`). The owner sets both when approving the plan; the lead, the live-leg queue and the review brief read them (a T0/T1 ticket gets one combined review).
    - `context.md` skeleton with sections `## Status`, `## Branches Checked`, `## <Per-service notes>`, `## Verification Notes` — leave empty.
    - `{{TICKET_PREFIX}}-NNNN.md` — a thin folder-note: an H1 title and pointers (wikilinks) to the four work files above; **no status duplication**. This is what makes `[[{{TICKET_PREFIX}}-NNNN]]` resolve vault-wide (root schema §4).
 5. For each affected service, link the new ticket from `{{VAULT_DIR}}/wiki/services/<Service>/<Service>.md` (the folder-note) under a "Related tickets" section (create the section if it doesn't exist). Use `[[{{TICKET_PREFIX}}-NNNN]]` wikilinks. If a service folder doesn't exist yet, flag it for the user — do not auto-create.
