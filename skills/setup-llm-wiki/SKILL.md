@@ -1,6 +1,6 @@
 ---
 name: setup-llm-wiki
-version: 1.7.0
+version: 1.7.1
 description: Bootstrap a Karpathy-style LLM Wiki (Obsidian vault + agent schema + the onboard/ticket/ingest/capture/query/journal/spark/lint skills, enforcement hooks, and companion-skill recommendations) into a directory of the user's choosing. Use when the user says "set up the LLM wiki", "set up an LM wiki", "install the wiki", "bootstrap a knowledge vault", "/setup-llm-wiki", "update the wiki skills", or asks any agent to stand up or upgrade the LLM-wiki system for one or many projects.
 ---
 
