@@ -8,8 +8,9 @@ Vault: `{{VAULT_DIR}}/` (its own git repo).
 - `wiki/index.md` catalogue: read first on any query, update on every ingest. `wiki/log.md` append-only ledger. `wiki/brag.md` wins. `wiki/journal/YYYY-MM.md`.
 - `wiki/services/<Name>/<Name>.md` one folder-note per repo under `{{ROOT_DIR}}`, sub-pages beside it, `CONTEXT.md` glossary as sibling. `[[<Name>]]` resolves to the folder-note.
 - `wiki/concepts/`, `wiki/incidents/`, `wiki/runbooks/`, `wiki/standards/` (house style), `wiki/decisions/NNNN-slug.md` (ADRs, indexed by `[[decisions]]`), `wiki/_assets/`.
-- `tickets/{{TICKET_PREFIX}}-NNNN/` holds `{{TICKET_PREFIX}}-NNNN.md`, `state.md`, `context.md`, `plan.md`, `notes.md`. Done tickets in `tickets/_archive/`.
+- `tickets/{{TICKET_PREFIX}}-NNNN/` holds `{{TICKET_PREFIX}}-NNNN.md`, `state.md`, `context.md`, `plan.md`, `notes.md`. Non-`.md` files go in `tickets/{{TICKET_PREFIX}}-NNNN/evidence/`; the done-claim proof is `proof.md`. Done tickets in `tickets/_archive/`.
 - `meta/` docs about this system.
+- The vault root holds only these homes plus tool-free files.
 
 ## 2. Operations
 
@@ -31,7 +32,7 @@ Orient first (read this schema, list active tickets under `tickets/*/state.md`, 
 ## 4. Tickets
 
 - Real ids `{{TICKET_PREFIX}}-NNNN` ({{TRACKER_NAME}}: {{TRACKER_URL}}). Placeholders `VLT-NNNN`, never an invented `{{TICKET_PREFIX}}-`. On rename, rewrite live references and append a `log.md` entry.
-- `state.md` frontmatter: `ticket`, `status` (active | investigated | implemented-pending-review | done), `created`, `kind` (bug | feature), `services: []`, `branches: []`, `tickets-related: []`, `needs-human: []` (items `{what, run, proves}` - a claim or action that needs a human to run or confirm something the agent can't; a database/environment query outside the local instance goes in `tickets/{{TICKET_PREFIX}}-NNNN/sql/NN-<slug>.sql` rather than inline).
+- `state.md` frontmatter: `ticket`, `status` (active | investigated | implemented-pending-review | done), `created`, `step` (current plan step, a few words), `updated` (`YYYY-MM-DDTHH:MM`; the lead changes `step` and `updated` at each step), `kind` (bug | feature), `services: []`, `branches: []`, `tickets-related: []`, `needs-human: []` (items `{what, run, proves}` - a claim or action that needs a human to run or confirm something the agent can't; a database/environment query outside the local instance goes in `tickets/{{TICKET_PREFIX}}-NNNN/sql/NN-<slug>.sql` rather than inline).
 - Done: `status: done`, `plan.md` reflects what shipped, `log.md` done entry, then `git mv tickets/{{TICKET_PREFIX}}-NNNN tickets/_archive/{{TICKET_PREFIX}}-NNNN`. Routine readers skip the archive. Reopen with `git mv` back, never a fresh folder.
 - Merged PR: tear down everything the ticket opened (panes, running services, worktree, branches) in the same turn, in the order a `ticket-teardown` runbook keeps.
 
