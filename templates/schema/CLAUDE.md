@@ -31,7 +31,7 @@ Vault: `{{VAULT_DIR}}/` (its own git repo).
 ## 4. Tickets
 
 - Real ids `{{TICKET_PREFIX}}-NNNN` ({{TRACKER_NAME}}: {{TRACKER_URL}}). Placeholders `VLT-NNNN`, never an invented `{{TICKET_PREFIX}}-`. On rename, rewrite live references and append a `log.md` entry.
-- `state.md` frontmatter: `ticket`, `status` (active | investigated | implemented-pending-review | done), `created`, `services: []`, `branches: []`, `tickets-related: []`, `needs-human: []` (items `{what, run, proves}` - a claim or action that needs a human to run or confirm something the agent can't; a database/environment query outside the local instance goes in `tickets/{{TICKET_PREFIX}}-NNNN/sql/NN-<slug>.sql` rather than inline).
+- `state.md` frontmatter: `ticket`, `status` (active | investigated | implemented-pending-review | done), `created`, `kind` (bug | feature), `services: []`, `branches: []`, `tickets-related: []`, `needs-human: []` (items `{what, run, proves}` - a claim or action that needs a human to run or confirm something the agent can't; a database/environment query outside the local instance goes in `tickets/{{TICKET_PREFIX}}-NNNN/sql/NN-<slug>.sql` rather than inline).
 - Done: `status: done`, `plan.md` reflects what shipped, `log.md` done entry, then `git mv tickets/{{TICKET_PREFIX}}-NNNN tickets/_archive/{{TICKET_PREFIX}}-NNNN`. Routine readers skip the archive. Reopen with `git mv` back, never a fresh folder.
 - Merged PR: tear down everything the ticket opened (panes, running services, worktree, branches) in the same turn, in the order a `ticket-teardown` runbook keeps.
 

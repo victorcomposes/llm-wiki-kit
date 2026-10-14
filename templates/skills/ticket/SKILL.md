@@ -1,6 +1,6 @@
 ---
 name: ticket
-version: 1.8.0
+version: 1.9.0
 description: Scaffold a new ticket folder under {{VAULT_DIR}}/tickets/{{TICKET_PREFIX}}-NNNN/ with state, context, plan, notes, and create matching feature branches in affected service repos. Use when the user says "ticket {{TICKET_PREFIX}}-NNNN", "/ticket {{TICKET_PREFIX}}-NNNN", "scaffold a ticket", or "start work on {{TICKET_PREFIX}}-NNNN".
 ---
 
@@ -15,7 +15,7 @@ Create a new ticket workspace for the ticket the user named (expect a `{{TICKET_
    - The {{TRACKER_NAME}} URL or summary line if they have it (base: {{TRACKER_URL}})
    - Which services they think will be affected (you'll cross-check against the folders under `{{VAULT_DIR}}/wiki/services/` and confirm)
 4. Create the folder and five files:
-   - `state.md` with frontmatter (`ticket`, `status: active`, `created: <today>`, `services: []`, `branches: []`, `tickets-related: []`, `needs-human: []`) and a one-paragraph "current focus" body. `needs-human` holds items only a human can decide or run: each one `{what, run, proves}`; a database/environment query outside the local instance goes in `tickets/{{TICKET_PREFIX}}-NNNN/sql/NN-<slug>.sql` rather than inline.
+   - `state.md` with frontmatter (`ticket`, `status: active`, `created: <today>`, `kind:` (blank; the owner sets `bug` or `feature` before approving the plan; a bug needs `## Reproduction` in notes.md first: the symptom observed on the current build, or "not reproducible locally because X"), `services: []`, `branches: []`, `tickets-related: []`, `needs-human: []`) and a one-paragraph "current focus" body. `needs-human` holds items only a human can decide or run: each one `{what, run, proves}`; a database/environment query outside the local instance goes in `tickets/{{TICKET_PREFIX}}-NNNN/sql/NN-<slug>.sql` rather than inline.
    - `notes.md` containing the user's brief verbatim, followed by a `## PAUSE (frame before coding)` block — five one-line answers seeded from the brief, to sharpen before implementation (the Assumptions line later feeds `plan.md`'s `## Assumptions`):
      - **Problem** — what is the real problem?
      - **Assumptions** — what do I know vs assume?
