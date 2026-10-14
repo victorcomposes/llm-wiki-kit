@@ -1,6 +1,6 @@
 ---
 name: lint
-version: 1.8.0
+version: 1.9.0
 description: Health-check the wiki — broken links, orphan pages, missing state, contradictions, gaps. Reports only, does not auto-fix. Use when the user says "lint", "/lint", "health-check the wiki", "find broken links", or asks for a vault audit.
 ---
 
@@ -40,6 +40,7 @@ Walk `{{VAULT_DIR}}/` and report issues. Do not fix anything automatically — s
     - **Does it still say what the page claims?** Read the cited lines and compare them against the assertion. Mismatch = `STALE`. Include the commit that moved it (`git log -1 --format='%h %ad %s' -- <path>`) so the drift window is visible. Judgement - use a strong model.
     - **Unmarked claims** - a substantive assertion about code with no provenance marker at all. Report as `UNMARKED`. These predate the provenance rule and cannot be audited without re-reading the code; they are the backlog, not a failure.
     A `> [!question]` block is **not** drift. An unverified claim correctly marked unverified is the system working as designed.
+12. **Strays** - run `python scripts/vault_layout.py --check` from the vault root (`{{VAULT_DIR}}`). This check needs `scripts/vault_layout.py`, which the kit does not ship; if the script is missing, skip the check silently. Report every `STRAY` line with its owner: `tickets/<id>/...` and `wiki/_assets/<id>/...` belong to ticket `<id>`; every other path belongs to the vault owner. List the `KEPT` and `DEFERRED` lines in one short block with their reasons. A stray is a layout fault, not a broken link. Do not move anything here; the owning lead or the vault owner does that.
 
 ## Report format
 
@@ -77,6 +78,12 @@ Walk `{{VAULT_DIR}}/` and report issues. Do not fix anything automatically — s
 - GONE     wiki/services/Foo/Foo.md:88 -> cites `Bar.cs:41`, file no longer exists
 - STALE    wiki/services/Foo/Foo.md:102 -> claims X; changed by 8198f377 2026-07-23
 - UNMARKED wiki/concepts/bar.md:15 -> asserts code behaviour, no provenance marker
+- ...
+
+### Strays (N)
+- ticket {{TICKET_PREFIX}}-NNNN: tickets/{{TICKET_PREFIX}}-NNNN/<path>
+- vault owner: <path>
+- KEPT <path> <reason>; DEFERRED {{TICKET_PREFIX}}-NNNN <path>
 - ...
 
 ### Suggested concept pages (N)

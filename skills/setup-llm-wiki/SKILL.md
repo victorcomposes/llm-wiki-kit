@@ -105,6 +105,7 @@ Build the substitution map from the answers. Every template file uses double-bra
 | `{{TRACKER_NAME}}` | e.g. `JIRA` (or blank) |
 | `{{TRACKER_URL}}` | tracker base URL (or blank) |
 | `{{TODAY}}` | today's date, `YYYY-MM-DD`, from the user's context |
+| `{{TOOL_DATA_DIR}}` | not asked; default `%LOCALAPPDATA%\llm-wiki` on Windows (write the expanded path, e.g. `C:\Users\<user>\AppData\Local\llm-wiki`), `~/.local/share/llm-wiki` elsewhere |
 
 Use the user's native path style (backslashes on Windows, forward slashes elsewhere) consistently in every file you write. Detect the OS from the environment.
 
