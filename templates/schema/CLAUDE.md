@@ -10,7 +10,7 @@ Vault: `{{VAULT_DIR}}/` (its own git repo).
 - `wiki/concepts/`, `wiki/incidents/`, `wiki/runbooks/`, `wiki/standards/` (house style), `wiki/decisions/NNNN-slug.md` (ADRs, indexed by `[[decisions]]`), `wiki/_assets/`.
 - `tickets/{{TICKET_PREFIX}}-NNNN/` holds `{{TICKET_PREFIX}}-NNNN.md`, `state.md`, `context.md`, `plan.md`, `notes.md`. Non-`.md` files go in `tickets/{{TICKET_PREFIX}}-NNNN/evidence/`; the done-claim proof is `proof.md`. Done tickets in `tickets/_archive/`.
 - `meta/` docs about this system.
-- The vault root holds only these homes plus tool-free files.
+- The vault root holds only these homes. Tool data (browser profiles, `node_modules`, caches) lives under `{{TOOL_DATA_DIR}}`.
 
 ## 2. Skills
 

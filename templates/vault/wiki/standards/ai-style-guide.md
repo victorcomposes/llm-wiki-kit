@@ -32,6 +32,10 @@ Why: the reader runs several agent panes at once and context-switches between th
 
 This rule belongs here and in the root schema, not in per-project agent memory. Agent memory is scoped per project directory, so a worktree or sibling-repo pane cannot load it, and the rule silently does not exist for exactly the sessions that need it most.
 
+## Messages to the user
+
+Every message from an agent to the user uses short sentences, one idea in each, active voice, and one name for one thing.
+
 ## Prose and tone
 
 Write so it reads like a person wrote it quickly and clearly, not like polished AI copy.
