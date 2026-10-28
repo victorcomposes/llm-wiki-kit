@@ -43,7 +43,8 @@ Reviewers open a PR cold, with none of the authoring session's context.
 
 - Before posting, ask who reads this and whether they can act on it. A question only a data-source owner, another team or a product decision can answer goes to that person directly, never into the PR.
 - An open item that genuinely belongs on the PR for context is phrased as a **statement**, not a question, and posted resolved or closed. An open thread from the author implies the reviewer owes a response.
-- **A PR opens with zero outstanding threads.** Pattern-deviation notes included.
+  - Exception: a screenshots comment is posted open (Active). It is for reviewers to look at, not a discussion. It is the only open author thread allowed when a PR opens. Reason: some hosts (Azure DevOps) collapse a closed thread, so reviewers never see the images.
+- **A PR opens with zero outstanding threads**, except the screenshots comment. Pattern-deviation notes included.
 - On hosts where comments cannot be edited through the API, get it right first time. Never add a comment just to fix a typo.
 - Strip internal-only references, vault ADR numbers and ticket shorthand from anything the team reads. See [[ai-style-guide]].
 
