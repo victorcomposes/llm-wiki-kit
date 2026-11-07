@@ -1,6 +1,6 @@
 ---
 name: council
-version: 2.2.0
+version: 2.2.1
 description: Convene fresh-context seats from a fixed roster (simplicity, robustness, domain, contrarian on every fork; delivery, risk, experience when a roster signal matches) to judge a design fork before acting on it, then record the decision with its dissent and the full seat reports. Use without being asked whenever a plan step or an imminent edit has two or more viable options, or touches a migration, a contract or DTO shape, a data model, a cross-service edge, or anything hard to reverse after deploy. Also use when the user says "council", "/council", "get a second opinion", or "what would the seats say".
 argument-hint: "<the fork, or the ticket id whose plan has one>"
 ---
@@ -31,7 +31,7 @@ If the council is self-invoked, from a plan step, a hook nudge, or a denied edit
 
 ## Step 2 - Round 1, parallel, blind
 
-Spawn every seat in the slate in one message so they run together. Each gets the identical brief and nothing else: no prior reasoning, no hint of your preference, no other seat's answer. Each returns the fixed shape from its agent file, which includes a `Brief wrong:` line. Treat a non-empty `Brief wrong:` as a correction to record, not an objection to argue.
+Spawn every seat in the slate in one message so they run together. Start each `Agent` description with the ticket id and the seat, for example `{{TICKET_PREFIX}}-123 council: risk`; clients that list subagent threads use the description as the title. Each gets the identical brief and nothing else: no prior reasoning, no hint of your preference, no other seat's answer. Each returns the fixed shape from its agent file, which includes a `Brief wrong:` line. Treat a non-empty `Brief wrong:` as a correction to record, not an objection to argue.
 
 ## Step 3 - Round 2, once
 
