@@ -1,6 +1,6 @@
 ---
 name: learned
-version: 1.0.1
+version: 1.0.2
 description: Send general learnings from the work vault to a separate personal vault inbox, one way, with a leak check. Use when the user says "learned", "/learned", "send learnings to my personal vault", or "promote learnings". The /journal skill calls it after the brag step. Installed only when a personal vault is configured.
 ---
 
@@ -43,7 +43,7 @@ Write every note in general terms:
    - Any match: rewrite the draft in general terms, then run the whole check again. Delete a failing draft, or overwrite it with `cleared`. Never copy a failing draft.
    - Also read each draft once. The deny list cannot know a name it has not seen. If you see a proprietary term, rewrite the draft and add the term to `deny.txt`.
 6. **Copy.** Copy only passing drafts into the personal vault's inbox folder. Do not overwrite an existing file: if the name exists, stop and treat it as a dedupe hit. The user reviews the notes and moves them to the notes folder. Run the step 5 `Grep` once more with `path` set to each copied file, one call per file. Do not search the whole inbox, because it holds other notes. Do not copy `_names.txt` or the career evidence draft.
-7. **Career evidence.** If the session or today's journal added lines to `wiki/brag.md` or `wiki/journal/evidence-log.md`, write a scrubbed version of each. Keep the category. Write the scrubbed lines to `{{VAULT_DIR}}/.learned-drafts/career-evidence.md` and run the step 5 `Grep` over the drafts folder. Append only passing lines as dated bullets to `Career evidence.md` in the personal vault (create it on first use, with the template's frontmatter and a `# Career evidence` heading):
+7. **Career evidence.** If the session or today's journal added lines to `wiki/brag.md` or `wiki/journal/evidence-log.md`, write a scrubbed version of each. Keep the category. Write the scrubbed lines to `{{VAULT_DIR}}/.learned-drafts/career-evidence.md` and run the step 5 `Grep` over the drafts folder. Append only passing lines as dated bullets to `Career/Career evidence.md` in the personal vault (create the `Career` folder and the file on first use if missing, with the template's frontmatter and a `# Career evidence` heading):
    `- YYYY-MM-DD · <category> · **<title>** - <what was done and the result, in general terms>`
    If there is nothing new, skip this step.
 8. **Log.** Run `date`. Append to `{{VAULT_DIR}}/wiki/log.md` with a surgical edit anchored on the last line, not a shell heredoc:
