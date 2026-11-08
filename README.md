@@ -16,7 +16,7 @@ llm-wiki-kit/
     ├── hooks/                          ← enforcement hooks (capture/stop nudges,
     │                                      secret-scan, lint-reminder) + settings snippets
     └── skills/                         ← the 8 wiki skills, de-hardcoded:
-        onboard · ticket · ingest · capture · query · journal · spark · lint
+        onboard · ticket · ingest · capture · query · journal · spark · lint (+ optional learned)
 ```
 
 ## Install (one time)
@@ -58,7 +58,7 @@ When the kit improves, say:
 
 The bootstrap runs in **Update mode**: it compares the `version:` of each installed skill against the kit, re-copies only what changed (preserving your vault content), and diffs the schema before touching it.
 
-## The eight operations
+## The operations
 
 | Skill | What it does |
 |---|---|
@@ -70,6 +70,7 @@ The bootstrap runs in **Update mode**: it compares the `version:` of each instal
 | `journal` | Append a session/day summary; capture brag-worthy wins. |
 | `spark` | Mine the vault for prototype candidates for a recurring AI builder session. (Optional module at install.) |
 | `lint` | Health-check: broken links, orphans, drift, contradictions. Reports only. |
+| `learned` | One-way, leak-checked pipe of general learnings from the work vault to a separate personal vault inbox. `journal` calls it. (Optional, needs a personal vault. Fill `deny.txt` with your employer names.) |
 
 ## Companion skills (recommended, installed from upstream)
 

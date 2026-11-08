@@ -14,7 +14,7 @@ Vault: `{{VAULT_DIR}}/` (its own git repo).
 
 ## 2. Operations
 
-Orient first (read this schema, list active tickets under `tickets/*/state.md`, surface what is in flight). Before ending a session that touched a service, file what you learned into its folder-note. Where the wiki skills are installed as slash commands: `/onboard`, `/capture`, `/ticket`, `/ingest`, `/journal`, `/lint`, `/query`, optional `/spark`.
+Orient first (read this schema, list active tickets under `tickets/*/state.md`, surface what is in flight). Before ending a session that touched a service, file what you learned into its folder-note. Where the wiki skills are installed as slash commands: `/onboard`, `/capture`, `/ticket`, `/ingest`, `/journal`, `/lint`, `/query`, optional `/spark`, optional `/learned` (needs a configured personal vault).
 
 ## 3. Wiki conventions
 

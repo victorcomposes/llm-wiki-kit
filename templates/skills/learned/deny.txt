@@ -1,0 +1,21 @@
+# One case-insensitive extended regex per line. Blank lines and # comments are ignored.
+# Use \b around short or common words.
+# The leak check also adds every folder name under wiki/services/ and the ticket id shapes.
+# Replace the examples below with your own employer, client, product and colleague names.
+
+# Employer and platform (examples)
+Example ?Corp
+Acme
+\bProjectX\b
+
+# Clients, partners, vendors, products (examples)
+Contoso
+Fabrikam
+
+# Colleagues (examples)
+\bAlice\b
+\bBob\b
+
+# Id shapes from work systems (examples)
+\bINC-[0-9]+
+\bCASE-[0-9]+

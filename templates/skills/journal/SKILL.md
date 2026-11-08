@@ -1,6 +1,6 @@
 ---
 name: journal
-version: 1.3.1
+version: 1.4.0
 description: Append a brief session/day summary to the current month's journal and prompt for brag-worthy items. Use when the user says "journal", "/journal", "log the day", "end of day", or wraps a session and wants it recorded.
 ---
 
@@ -35,9 +35,10 @@ Update the journal for the current month at `{{VAULT_DIR}}/wiki/journal/YYYY-MM.
       `- YYYY-MM-DD · <category> · **<title>** — <what you did and the proof/metric> [[{{TICKET_PREFIX}}-NNNN]]`
       Ask for category/title if not obvious; the same win can feed both this line and the brag prompt below.
 5. If the user is present (interactive session), ask: *"Anything worth promoting to `brag.md`?"* — typical brag-worthy items: a ticket merged, a tricky bug found, a piece of infra unblocked, a doc that took something cross-team from murky to obvious. Append confirmed items to `{{VAULT_DIR}}/wiki/brag.md` under a `## YYYY-MM` section.
-6. **Builder-session closure** *(only if `wiki/concepts/prototype-ideas.md` exists)*: if today's work included building/demoing a prototype (check the log entries and the session itself), flip the matching backlog entry's status to `built` (link the demo/repo/brag line) and make sure the build came up in step 5's brag prompt. A `spark` run with no build yet needs nothing.
-7. Append to `wiki/log.md`:
+6. **Learnings to the personal vault** *(only if the `learned` skill is installed and `{{PERSONAL_VAULT}}` is an existing folder; otherwise skip without a word)*: run `/learned`. It sends general, employer-free learnings to the personal vault inbox and logs a `learned` entry itself. Run it after the brag step so new brag and evidence lines are available to it.
+7. **Builder-session closure** *(only if `wiki/concepts/prototype-ideas.md` exists)*: if today's work included building/demoing a prototype (check the log entries and the session itself), flip the matching backlog entry's status to `built` (link the demo/repo/brag line) and make sure the build came up in step 5's brag prompt. A `spark` run with no build yet needs nothing.
+8. Append to `wiki/log.md`:
    `## [YYYY-MM-DD HH:MM] journal | updated <YYYY-MM> journal`
-8. Report: which entry was added, and (if applicable) what was added to brag and the evidence log.
+9. Report: which entry was added, and (if applicable) what was added to brag and the evidence log, and the `/learned` result.
 
 Keep entries terse. The journal is a low-friction record, not a daily essay.

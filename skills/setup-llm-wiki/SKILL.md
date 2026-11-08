@@ -1,7 +1,7 @@
 ---
 name: setup-llm-wiki
-version: 1.7.1
-description: Bootstrap a Karpathy-style LLM Wiki (Obsidian vault + agent schema + the onboard/ticket/ingest/capture/query/journal/spark/lint skills, enforcement hooks, and companion-skill recommendations) into a directory of the user's choosing. Use when the user says "set up the LLM wiki", "set up an LM wiki", "install the wiki", "bootstrap a knowledge vault", "/setup-llm-wiki", "update the wiki skills", or asks any agent to stand up or upgrade the LLM-wiki system for one or many projects.
+version: 1.8.0
+description: Bootstrap a Karpathy-style LLM Wiki (Obsidian vault + agent schema + the onboard/ticket/ingest/capture/query/journal/spark/lint skills (plus the optional learned skill), enforcement hooks, and companion-skill recommendations) into a directory of the user's choosing. Use when the user says "set up the LLM wiki", "set up an LM wiki", "install the wiki", "bootstrap a knowledge vault", "/setup-llm-wiki", "update the wiki skills", or asks any agent to stand up or upgrade the LLM-wiki system for one or many projects.
 ---
 
 > **Two modes.** If the user says "update", "upgrade", or "refresh the skills" and a vault/schema already exists, run **Update mode** (see the end of this file) instead of the full bootstrap. Otherwise run the full interview + install below.
@@ -89,7 +89,12 @@ Ask these **one at a time**, in this order. For each, state your recommended def
 
    On macOS/Linux the two nudge hooks require `jq` on PATH — check with `command -v jq` and tell the user if it's missing. *(Recommend: yes — without these, capture is honor-system.)*
 
-After the interview, **echo the full config back** as a short table (root, vault, layout, skill scope, agent(s), tickets/prefix/tracker, builder-session module, hooks) and ask the user to confirm before you write any files.
+9. **Personal vault?** Does the user keep a separate personal Obsidian vault that should receive general (employer-free) learnings from this one?
+   - If **yes**: ask for its path → `{{PERSONAL_VAULT}}`, install the `learned` skill, and tell the user the leak-check deny list (`learned/deny.txt`) starts as examples and they must fill it with their employer, client and colleague names.
+   - If **no**: set `{{PERSONAL_VAULT}}` to `none` and skip the `learned` skill. The journal step for it then skips silently.
+   *(Recommend: only if the personal vault is a different repo from the work vault; the pipe is one way, work to personal.)*
+
+After the interview, **echo the full config back** as a short table (root, vault, layout, skill scope, agent(s), tickets/prefix/tracker, builder-session module, personal vault, hooks) and ask the user to confirm before you write any files.
 
 ---
 
@@ -104,6 +109,7 @@ Build the substitution map from the answers. Every template file uses double-bra
 | `{{TICKET_PREFIX}}` | e.g. `SD` (or blank if tickets disabled) |
 | `{{TRACKER_NAME}}` | e.g. `JIRA` (or blank) |
 | `{{TRACKER_URL}}` | tracker base URL (or blank) |
+| `{{PERSONAL_VAULT}}` | path of the user's separate personal vault (Step 1.9), or the literal word `none` |
 | `{{TODAY}}` | today's date, `YYYY-MM-DD`, from the user's context |
 | `{{TOOL_DATA_DIR}}` | not asked; default `%LOCALAPPDATA%\llm-wiki` on Windows (write the expanded path, e.g. `C:\Users\<user>\AppData\Local\llm-wiki`), `~/.local/share/llm-wiki` elsewhere |
 
@@ -193,6 +199,7 @@ Copy each skill directory from `templates/skills/` to the chosen scope (`~/.clau
 7. **spark** — *(skip if builder-session module disabled)* mines the vault for prototype candidates.
 8. **lint** — health-check; depends on the others having produced content.
 9. **council** — *(optional)* judges a design fork with fresh-context seats from `references/roster.md` (four core, three optional selected by roster signals) before the edit. Also copy all seven `templates/agents/council-*.md` to `~/.claude/agents/` (or `{{ROOT_DIR}}/.claude/agents/`), substituting placeholders; the skill spawns them by name.
+10. **learned** — *(skip if no personal vault, Step 1.9)* one-way, leak-checked learnings from this vault to the personal vault inbox; `/journal` calls it after the brag step. Copy `deny.txt` along with `SKILL.md`.
 
 ---
 
