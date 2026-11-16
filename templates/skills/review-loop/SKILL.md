@@ -1,12 +1,14 @@
 ---
 name: review-loop
-version: 1.0.0
+version: 1.1.0
 description: "Review a ticket's diff in a loop with a fresh Opus reviewer before the draft PR: 3 rounds at most, each finding answered in the review.md ledger. Use before a draft PR opens (root schema section 5, Commit step), or when the user says review loop or /review-loop."
 ---
 
 # Review loop
 
 A fresh reviewer reviews the diff. You answer each finding with the smallest change. Fight scope creep. Push back when a finding is wrong.
+
+Source: TStack `sol-loop`. The proof rule comes from pstack `interrogate` (MIT).
 
 ## Budget
 
@@ -34,6 +36,7 @@ See: git diff <base> [-- <paths>]; git status --short (read untracked files).
 Read surrounding code. Find bugs, broken callers, mismatch with intent, breaches of a user ruling or a coding convention.
 Skip style unless it hides a bug. Hold to the smallest change. Flag code, tests or guards the intent does not need. Other paths, rare cases, small perf, extra compat: nits.
 blocker = the intended case is wrong. should = a real bug that callers will hit, or a breach of a user ruling or a coding convention. nit = the rest.
+Prove each blocker and should with a run: the exact command, the output it printed, and the output the intent requires (T ids may name the evidence file). No run: nit, except a ruling or convention breach, cited with file:line. No findings is a valid result.
 Reply. Line 1: VERDICT: APPROVE or VERDICT: CHANGES. Then one line for each finding, ids stable across rounds:
 <S|T>1 [blocker|should|nit] <file>:<line> <claim>. Fix: <suggestion>
 Use S for ids if you review the code. Use T if you audit the proof.
@@ -43,6 +46,7 @@ Use S for ids if you review the code. Use T if you audit the proof.
 
 Check each finding and its severity yourself. Another path, a rare case or a small cost is a nit, whatever its label.
 
+- Rerun the command of a finding (or read its evidence file) before you accept it. A finding whose command does not show the failure is declined in one line.
 - Agree: a subagent makes the smallest fix. Prefer delete or narrow over a new lock, cache, helper or option. Fix the case that happened. Add one focused test that fails without the fix, if the intent needs it.
 - Disagree: say why, with evidence (file:line, test, output).
 - Out of scope or nit: decline in one line. List it as a follow-up in the report.
