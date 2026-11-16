@@ -17,6 +17,7 @@ Any message that reports progress or asks for a decision uses this card, in this
 **Problem.** One sentence, in product terms.
 **Fix.** One sentence.
 **Status.** Where it is, and whether code exists yet.
+**Not proven.** Each step that you skipped, each proof leg that did not run or was inconclusive, and each source that you did not read, with the reason. "Nothing" if nothing.
 **Changed since last time.** One or two lines. Omit on a first report.
 ````
 
