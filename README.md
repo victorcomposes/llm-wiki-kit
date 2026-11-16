@@ -70,7 +70,7 @@ The bootstrap runs in **Update mode**: it compares the `version:` of each instal
 | `query` | Answer from the wiki with citations; file good answers back as pages. |
 | `journal` | Append a session/day summary; capture brag-worthy wins. |
 | `spark` | Mine the vault for prototype candidates for a recurring AI builder session. (Optional module at install.) |
-| `lint` | Health-check: broken links, orphans, drift, contradictions. Reports only. |
+| `lint` | Health-check: broken links, orphans, index drift, ticket folders without state, missing service pages, service-graph drift. Reports only. |
 | `learned` | One-way, leak-checked pipe of general learnings from the work vault to a separate personal vault inbox. `journal` calls it. (Optional, needs a personal vault. Fill `deny.txt` with your employer names.) |
 | `review-loop` | Review a ticket's diff with a fresh Opus reviewer before the draft PR: 3 rounds at most, each finding answered in the ticket's `review.md` ledger. (Optional.) |
 | `council` | Three fresh delegates review or judge a request in parallel, then one summary of findings, disagreements and next steps. Runs only when the user's own message says "council"; models from the `Council delegates:` line in the root schema. (Optional.) |
