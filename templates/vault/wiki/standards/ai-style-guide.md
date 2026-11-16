@@ -32,15 +32,12 @@ Why: the reader runs several agent panes at once and context-switches between th
 
 This rule belongs here and in the root schema, not in per-project agent memory. Agent memory is scoped per project directory, so a worktree or sibling-repo pane cannot load it, and the rule silently does not exist for exactly the sessions that need it most.
 
-## Messages to the user
-
-Every message from an agent to the user uses short sentences, one idea in each, active voice, and one name for one thing.
-
 ## Prose and tone
 
-Write so it reads like a person wrote it quickly and clearly, not like polished AI copy.
+The one home for prose rules. They apply to every message, brief, report, PR text and ticket text. Write so it reads like a person wrote it quickly and clearly, not like polished AI copy.
 
-- No em dashes or en dashes as connectors. Use a comma, period, parentheses, or colon. Split long sentences.
+- Short sentences, one idea in each, active voice, and one name for one thing.
+- No em dashes or en dashes as connectors. Use a plain dash, a comma or a new sentence. No semicolons.
 - No literary flourishes: drop the rule-of-three lists, the "not just X but Y" constructions, the throat-clearing intros.
 - Plain and direct over formal. Contractions are fine. Get to the point.
 - Concrete over abstract: prefer the specific noun or number to the adjective. Cut filler adjectives.
