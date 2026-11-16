@@ -1,6 +1,6 @@
 ---
 name: ingest
-version: 1.1.0
+version: 1.1.1
 description: Read a source (URL or file path) and integrate it into the wiki — Karpathy's LLM Wiki pattern. Use when the user says "ingest", "/ingest", "add this to the wiki", "file this source", or hands over a URL/path to be folded into the vault.
 ---
 
@@ -11,7 +11,7 @@ This is the Karpathy LLM Wiki "ingest" operation. The full pattern is in `{{VAUL
 ## Steps
 
 1. **Read the source**:
-   - If the argument looks like a URL, use the `defuddle` skill (from `kepano/obsidian-skills`, if installed) to fetch clean markdown; otherwise fetch the page and strip it to readable text.
+   - If the argument looks like a URL, fetch the page and strip it to readable text.
    - If it's a file path, read it directly.
    - If it's neither, ask the user.
 2. **Classify** the source. Decide which category it belongs to:
