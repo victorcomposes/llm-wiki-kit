@@ -41,27 +41,6 @@
             "statusMessage": "Scanning staged vault changes for secrets"
           }
         ]
-      },
-      {
-        "matcher": "Edit|Write|MultiEdit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash \"{{VAULT_DIR}}/.claude/hooks/council-gate.sh\"",
-            "statusMessage": "Council gate: migration/contract path check..."
-          }
-        ]
-      }
-    ],
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash \"{{VAULT_DIR}}/.claude/hooks/council-prompt.sh\"",
-            "statusMessage": "Council trigger: design-idea check..."
-          }
-        ]
       }
     ]
   }

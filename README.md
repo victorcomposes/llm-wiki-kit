@@ -16,7 +16,8 @@ llm-wiki-kit/
     ├── hooks/                          ← enforcement hooks (capture/stop nudges,
     │                                      secret-scan, lint-reminder) + settings snippets
     └── skills/                         ← the 8 wiki skills, de-hardcoded:
-        onboard · ticket · ingest · capture · query · journal · spark · lint (+ optional learned)
+        onboard · ticket · ingest · capture · query · journal · spark · lint
+        (+ optional learned, review-loop, council)
 ```
 
 ## Install (one time)
@@ -71,6 +72,8 @@ The bootstrap runs in **Update mode**: it compares the `version:` of each instal
 | `spark` | Mine the vault for prototype candidates for a recurring AI builder session. (Optional module at install.) |
 | `lint` | Health-check: broken links, orphans, drift, contradictions. Reports only. |
 | `learned` | One-way, leak-checked pipe of general learnings from the work vault to a separate personal vault inbox. `journal` calls it. (Optional, needs a personal vault. Fill `deny.txt` with your employer names.) |
+| `review-loop` | Review a ticket's diff with a fresh Opus reviewer before the draft PR: 3 rounds at most, each finding answered in the ticket's `review.md` ledger. (Optional.) |
+| `council` | Three fresh delegates review or judge a request in parallel, then one summary of findings, disagreements and next steps. Runs only when the user's own message says "council"; models from the `Council delegates:` line in the root schema. (Optional.) |
 
 ## Companion skills (recommended, installed from upstream)
 
@@ -81,7 +84,7 @@ The kit deliberately does **not** vendor third-party skills — the installer of
 
 ## Hooks (optional, recommended — Claude Code only)
 
-Without hooks everything still works, but knowledge capture is honor-system. With them, the standing rules are **enforced**. The installer offers seven (`templates/hooks/`):
+Without hooks everything still works, but knowledge capture is honor-system. With them, the standing rules are **enforced**. The installer offers five (`templates/hooks/`):
 
 | Hook | Event / scope | What it does |
 |---|---|---|
@@ -90,8 +93,6 @@ Without hooks everything still works, but knowledge capture is honor-system. Wit
 | `secret-scan` | PreToolUse on `git`, vault `settings.json` | Blocks `git commit` while staged vault changes contain secret-shaped strings. |
 | `lint-reminder` | SessionStart, vault `settings.json` | One-line tip when the last `/lint` is 7+ days old. |
 | `guard-git` | PreToolUse on Bash, user `settings.json` | Denies `git add -A` / `-f`, and any commit whose subject is not `{{TICKET_PREFIX}}-NNNN <summary>` (or `<op>: <summary>` in the vault) or that carries a body. Makes the section 6 git rules deterministic instead of advisory. |
-| `council-gate` | PreToolUse on Edit/Write, user `settings.json` | Denies an edit to a migration or contract path unless a ruled `council.md` entry in an active ticket carries a `Clears:` glob matching the file; `/council` writes the ledger (fresh-context seats from a roster judge the fork, decision recorded with dissent, seat reports filed beside it). Agents in `templates/agents/`. |
-| `council-prompt` | UserPromptSubmit, user `settings.json` | On an idea-shaped prompt (idea verb plus design noun, or the word `council`), injects the instruction to convene `/council` before agreeing or recommending. `no council` in the prompt skips it. |
 
 Layout rule: **logic in the vault (versioned), pointers at user level (reach)** — `settings.json` doesn't cascade, so the three session-wide hooks must be referenced from `~/.claude/settings.json` (the installer merges, never overwrites). Windows uses the PowerShell nudge variants; macOS/Linux use the bash variants, which require `jq`. `secret-scan`/`lint-reminder` are bash everywhere (Git Bash on Windows). Hooks added mid-session activate only after `/hooks` is opened or a new session starts.
 

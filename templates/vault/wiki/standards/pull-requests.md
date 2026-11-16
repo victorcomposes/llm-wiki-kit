@@ -12,7 +12,7 @@ Adapt the mechanics to your host ({{TRACKER_NAME}}, GitHub, GitLab, Azure DevOps
 
 ## Pre-merge review
 
-A pre-merge review against the trunk reports only issues that would block a merge, each with file, line and a reproduction; see [[verification]].
+The `review-loop` skill reviews the diff before the draft PR opens: a fresh Opus reviewer, 3 rounds at most, ledger in the ticket's `review.md`. Severities: `blocker` = the intended case is wrong. `should` = a real bug that callers will hit, or a breach of a user ruling or a coding convention. `nit` = the rest.
 
 ## Opening one
 
@@ -34,6 +34,7 @@ If the body needs more than about one screen to scan, it is too long. Most hosts
 - **Open in product terms.** First sentence is a verb plus the user-visible things the PR delivers, plus the ticket ids. "Adds the settings page and shows out-of-scope records as visible but disabled", never "the user-facing half of workstream X". A reviewer cold on the workstream cannot parse workstream framing. Relationship to other PRs comes after, in its own short sentence.
 - **Checklist.** `- [x] Item` means required and done. `- [ ] ~~Item~~ - none required.` means it does not apply. Never tick a box to mean "not applicable", and never leave a non-applicable item as bare unticked text. A tick claims work was done; an untouched empty box reads as work outstanding.
 - **Notes are facts, not reasoning.** One line each: the fact a reviewer would otherwise flag, with no justification after it.
+- **Review note.** When the review loop ran, one note line: `Reviewed: <N> rounds, <model>`, from the ticket's `review.md`.
 - **Beware `#N`.** Most hosts autolink `#<digits>` to the issue or work item with that id, in descriptions and in comments, often with no escape that survives the editor. Write "shot 1", "step 2", "set 3". Grep the body for `#[0-9]` before every write, including any PR-body file kept in the vault, since those are pasted verbatim.
 - **Name deliberate pattern breaks.** When hand-rolled work deviates from the visible pattern of the surrounding code for a technical reason, say so in the notes with the reason, and surface it before review. Default to the visible pattern unless the reason is decisive; when it is, the trade-off call belongs to the reviewer, not the author.
 

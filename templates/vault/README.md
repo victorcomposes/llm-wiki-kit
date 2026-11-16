@@ -13,7 +13,7 @@ Obsidian vault for development knowledge under `{{ROOT_DIR}}`. Maintained by AI 
   - `concepts/` — cross-service domain concepts
   - `incidents/` — postmortems · `runbooks/` — BAU procedures · `standards/` — conventions
   - `_assets/` — Obsidian attachments
-- **`tickets/`** — one folder per `{{TICKET_PREFIX}}-NNNN` ticket (`state.md`, `context.md`, `plan.md`, `notes.md`).
+- **`tickets/`** — one folder per `{{TICKET_PREFIX}}-NNNN` ticket (`{{TICKET_PREFIX}}-NNNN.md`, `state.md`, `plan.md`, `review.md`, `evidence/`).
 - **`meta/`** — reference docs about this system itself (the LLM Wiki pattern + blueprint).
 
 ## How to use
