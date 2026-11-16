@@ -69,4 +69,4 @@ Also:
 ## 7. House style
 
 `wiki/standards/`. Prose rules: the Prose and tone section of [[ai-style-guide]].
-- Any message that reports progress or asks for a decision uses the standing card in [[ai-style-guide]]: Blocked on you, Problem, Fix, Status, Changed since. Reasoning, evidence and subagent verdicts are pointed at in `tickets/{{TICKET_PREFIX}}-NNNN/plan.md`, never inlined.
+- Any message that reports progress or asks for a decision uses the standing card in [[ai-style-guide]]. Reasoning, evidence and subagent verdicts are pointed at in `tickets/{{TICKET_PREFIX}}-NNNN/plan.md`, never inlined.
