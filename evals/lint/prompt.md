@@ -19,9 +19,7 @@ procedure — it names the real vault, not this run. Read every `.md` file under
 target fully before deciding.
 
 **Scope:** emit findings only for these seven check types (map them to the
-corresponding checks in the procedure). Skip everything else the procedure lists —
-mtime-based stale/contradiction checks, advisory "suggested concept/research gap"
-heuristics, and kit-drift — none of those are in scope.
+corresponding checks in the procedure). Skip anything else.
 
 - `broken-wikilink`  (source, target)
 - `orphan`  (page)

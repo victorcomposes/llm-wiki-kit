@@ -13,11 +13,11 @@
     "graph-asymmetry"
   ],
   "excluded_types": {
-    "stale-ticket": "mtime-based; not reproducible from a git checkout (fresh clone = fresh mtime)",
-    "contradiction-unreviewed": "mtime-based; same reason",
-    "suggested-concept": "advisory heuristic, not a defect",
-    "suggested-research-gap": "advisory heuristic, not a defect",
-    "kit-drift": "environment-specific; depends on the real kit checkout, not the fixture"
+    "stale-ticket": "check 4, removed in lint 1.10.0; ignored if a run emits it",
+    "contradiction-unreviewed": "check 7, removed in lint 1.10.0; ignored if a run emits it",
+    "suggested-concept": "check 9, removed in lint 1.10.0; ignored if a run emits it",
+    "suggested-research-gap": "check 9, removed in lint 1.10.0; ignored if a run emits it",
+    "kit-drift": "check 10, removed in lint 1.10.0; ignored if a run emits it"
   },
   "expected": [
     { "type": "broken-wikilink", "source": "wiki/concepts/alpha.md", "target": "nonexistent-alpha" },

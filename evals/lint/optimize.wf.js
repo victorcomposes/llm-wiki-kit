@@ -38,7 +38,7 @@ Guardrails: change only check definitions and their examples; never touch the re
 
 const RUNNER = `You are running a vault health-check (lint). The lint PROCEDURE is below. Apply it EXACTLY as written — its wording is the thing under test; do not substitute your own idea of a check, follow the procedure's own definitions literally.
 TARGET VAULT ROOT: ${FIXTURE}  (treat this as the vault root; ignore any absolute path hardcoded in the procedure). Read every .md file under it fully.
-SCOPE: emit findings only for these seven types, mapping them to the procedure's checks; skip mtime-based stale/contradiction checks, advisory suggested-concept/research-gap heuristics, and kit-drift:
+SCOPE: emit findings only for these seven types, mapping them to the procedure's checks; skip anything else:
 broken-wikilink(source,target), orphan(page), index-drift-missing(page), index-drift-dangling(entry), missing-state(folder), missing-service-page(service), graph-asymmetry(from,to).
 Paths vault-relative, forward slashes.
 --- BEGIN lint/SKILL.md ---

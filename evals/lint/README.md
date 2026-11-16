@@ -29,11 +29,10 @@ one thing in this vault with a genuinely countable metric.
 F1 over seven **countable** check types: broken-wikilink, orphan, index-drift-missing,
 index-drift-dangling, missing-state, missing-service-page, graph-asymmetry.
 
-Deliberately **out of scope** (documented in `manifest.json`): mtime-based checks
-(stale tickets, unreviewed contradictions) are not reproducible from a git checkout;
-advisory heuristics (suggested concepts/research gaps) aren't defects; kit-drift is
-environment-specific. A loop optimizing this metric cannot see those checks, so it
-can't regress them either — keep them in mind when editing the skill.
+The seven types cover every check in lint 1.10.0. Version 1.10.0 removed checks 4, 7, 9,
+10, 11 and 12 (stale tickets, unreviewed contradictions, suggested concepts, kit drift,
+claim drift, strays). `manifest.json` keeps their types in `excluded_types`, so a run
+that still emits one is neither rewarded nor penalised.
 
 ## How to run
 
