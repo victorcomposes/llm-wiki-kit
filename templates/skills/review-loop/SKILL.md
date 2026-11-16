@@ -68,7 +68,7 @@ Start one only if rounds remain and a blocker or should is open, behaviour code 
 
 - **Pass.** APPROVE on the current behaviour diff, no blocker or should open, no concern of your own.
 - **Cap or dispute.** A blocker or should is open after round 3, or an item stays disputed after two replies. You rule. The user does not. An open blocker that is not fixed means scrap and plan again (push the branch first). A blocker cannot be dismissed. When only should items are open, you may move them to a follow-up ticket. Write both sides and your ruling in 2-3 lines each. The cap is not a pass.
-- **Closed.** Use `closed` when the rounds are used and each open item is fixed with its check run again, or when a should item stays disputed after two replies and you have evidence against it.
+- **Closed.** Use `closed` when each open item is fixed with its check run again and the rules for a next round ask for no new round, or when a should item stays disputed after two replies and you have evidence against it.
 - **Ruling line.** Write one closing line after the last heading of the highest round in `review.md`, in one of three forms: `Ruling: scrap - <reason>`, `Ruling: follow-up <ticket id> - <reason>`, `Ruling: closed - <id>: fixed, <check that ran> | <id>: dismissed, <evidence>`.
 - Do not push during the loop. After a pass, a `Ruling: follow-up` or a `Ruling: closed`, the change is ready for its draft PR. Open it when the user asks (root schema section 5), and add the note line `Reviewed: <N> rounds, <model>` (`{{VAULT_DIR}}/wiki/standards/pull-requests.md`).
 - Report: rounds, model, what review changed, diff size before and after, fixed and declined findings with reasons.
